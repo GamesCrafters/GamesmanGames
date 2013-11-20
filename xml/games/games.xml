@@ -1,10 +1,13 @@
 <?xml version="1.0" ?>
+<games>
 <game>
   <title>Tic Tac Toe</title>
   <description>
     Tic Tac Toe is a basic game involving some things. These things are
     important and will play an important role in things.
   </description>
+  <image>images/ttt.png</image>
+  <asset>ttt</asset>
   <tags>
     <two-player />
     <dartboard />
@@ -12,12 +15,16 @@
     <play />
   </tags>
 </game>
+
+
 <game>
-	<title>Achi</title>
+	<title>Connect 4</title>
 	<description>
-		Tic Tac Toe is a basic game involving some things. These things are
+		Connect 4 is a basic game involving some things. These things are
     important and will play an important role in things.
 	</description>
+	<image>images/connect4.png</image>
+	<asset>c4</asset>
 	  <tags>
     <two-player />
     <dartboard />
@@ -25,3 +32,4 @@
     <play />
   </tags>
 </game>
+</games>
