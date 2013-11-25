@@ -1,9 +1,5 @@
-var $,
-  __hasProp = {}.hasOwnProperty;
-
-$ = jQuery;
-
-$.fn.extend({
+$(document).ready(function() {
+jQuery.fn.extend({
   getConfigure: function(options) {
     var c, contents, gameInfo, info, log, makeInput, makeRange, name, settings;
     settings = {
@@ -18,6 +14,7 @@ $.fn.extend({
     c = this.first();
     contents = "";
     makeRange = function(n, i) {
+      console.log("make range");
       var description, ival, retval, selected, v, value, _i, _len, _ref;
       v = i.values;
       description = i.desc;
@@ -43,7 +40,6 @@ $.fn.extend({
     };
     gameInfo = "";
     for (name in settings) {
-      if (!__hasProp.call(settings, name)) continue;
       info = settings[name];
       if (typeof info === "object") {
         switch (info.type) {
@@ -52,7 +48,7 @@ $.fn.extend({
         }
       }
     }
-    contents = "<form action='play' class='custom'>\n  <fieldset>\n    <legend>Player Info</legend>\n    <div class=\"row\">\n      <div class=\"three columns\">\n        <input type='text' name='player1' " + (configurationHash["player1"] ? "value='" + configurationHash["player1"] + "'" : void 0) + " placeholder='Player 1 Name' />\n      </div>\n      <div class=\"three columns\">\n        <div class=\"row collapse\">\n          <div class=\"six columns\">\n            <a class='" + (configurationHash['p1-type'] === 'computer' ? "secondary" : void 0) + " button expand prefix' id='p1-human'>Human</a>\n          </div>\n          <div class=\"six columns\">\n            <a class='" + (configurationHash['p1-type'] !== 'computer' ? "secondary" : void 0) + " button expand prefix' id='p1-comp'>Computer</a>\n          </div>\n        </div>\n      </div>\n      <div class=\"three columns\">\n        <input type='text' name='player2' " + (configurationHash["player2"] ? "value='" + configurationHash["player2"] + "'" : void 0) + " placeholder='Player 2 Name' />\n      </div>\n      <div class=\"three columns\">\n        <div class=\"row collapse\">\n          <div class=\"six columns\">\n            <a class='" + (configurationHash['p2-type'] === 'computer' ? "secondary" : void 0) + " button expand prefix' id='p2-human'>Human</a>\n          </div>\n          <div class=\"six columns\">\n            <a class='" + (configurationHash['p2-type'] !== 'computer' ? "secondary" : void 0) + " button expand prefix' id='p2-comp'>Computer</a>\n          </div>\n        </div>\n      </div>\n    </div>\n  </fieldset>\n  <fieldset>\n    <legend>Game Info</legend>\n    " + gameInfo + "\n  </fieldset>\n  <input type=\"hidden\" name=\"p1-type\" id=\"p1-type\" value=\"" + (configurationHash['p1-type'] === "computer" ? "computer" : "human") + "\" />\n  <input type=\"hidden\" name=\"p2-type\" id=\"p2-type\" value=\"" + (configurationHash['p2-type'] === "computer" ? "computer" : "human") + "\" />\n  <input type=\"hidden\" name=\"continue-game\" id=\"continue-game\" value=\"" + (configurationHash['update-settings'] != null ? "yes" : "no") + "\" />\n  <input class=\"button\" type=\"submit\" value=\"" + (configurationHash['update-settings'] != null ? "Continue Game" : "Let's Play!") + "\" />\n  " + (configurationHash['update-settings'] ? '<input class="button" type="submit" id="restartButton" value="New Game" />' : '') + "\n</form>";
+    contents = "<form action='play.html' class='custom'>\n  <fieldset>\n    <legend>Player Info</legend>\n    <div class=\"row\">\n      <div class=\"three columns\">\n        <input type='text' name='player1' value='' placeholder='Player 1 Name' />\n      </div>\n      <div class=\"three columns\">\n        <div class=\"row collapse\">\n          <div class=\"six columns\">\n            <a class='secondary button expand prefix' id='p1-human'>Human</a>\n          </div>\n          <div class=\"six columns\">\n            <a class='secondary button expand prefix' id='p1-comp'>Computer</a>\n          </div>\n        </div>\n      </div>\n      <div class=\"three columns\">\n        <input type='text' name='player2' value='' placeholder='Player 2 Name' />\n      </div>\n      <div class=\"three columns\">\n        <div class=\"row collapse\">\n          <div class=\"six columns\">\n            <a class='computer button expand prefix' id='p2-human'>Human</a>\n          </div>\n          <div class=\"six columns\">\n            <a class='computer button expand prefix' id='p2-comp'>Computer</a>\n          </div>\n        </div>\n      </div>\n    </div>\n  </fieldset>\n  <fieldset>\n    <legend>Game Info</legend>\n    " + gameInfo + "\n  </fieldset>\n  <input type=\"hidden\" name=\"p1-type\" id=\"p1-type\" value=\"human\" />\n  <input type=\"hidden\" name=\"p2-type\" id=\"p2-type\" value=\"computer\" />\n  <input type=\"hidden\" name=\"continue-game\" id=\"continue-game\" value=\"no\" />\n  <input class=\"button\" type=\"submit\" value=\"Let's Play!\" />\n </form>";
     c.html(contents);
     $('#p1-human').click(function(event) {
       $('#p1-human').removeClass('secondary');
@@ -79,6 +75,7 @@ $.fn.extend({
     });
     return this;
   }
+});
 });
 
 window.ensureConfigParameters = function() {

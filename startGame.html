@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="stylesheets/app.css"></link>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="foundation/js/custom.modernizr.js"></script>
+<script src="globals.js"></script>
+<script src="session.js"></script>
+<script src="gameSetup.js"></script>
+<script src="app.js"></script>
+<script src="config.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#game-title').text(game.title);
+	$('#game-config').getConfigure(game.parameters);
+});
+</script>
+
+</head>
+<body>
+<div class="row">
+	<div class="twelve columns">
+		<div class="panel">
+			<h1 id="game-title"></h1>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="twelve columns">
+		<div id="game-config" class="twelve columns">
+			<!-- temporary hard coded until call to get inital options for games -->
+			<form>
+				<div class="row">
+
+		</div>
+	</div>
+</div>
+
+
+<script src="foundation/js/vendor/jquery.js"></script>
+<script src="foundation/js/foundation.min.js"></script>
+<script>
+$(document).foundation();
+</script>
+</body>
+</html>
