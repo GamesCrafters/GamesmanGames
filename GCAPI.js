@@ -6,29 +6,28 @@ window.GCAPI || (window.GCAPI = {});
 
 window.GCAPI.console = console;
 
-window.GCAPI.GameNotifier = (function() {
+window.GCAPI.GameNotifier = gameNotifier = (function() {
 
-  function _Class(canvas, conf) {
+  function gameNotifier(canvas, conf) {
     this.canvas = canvas;
     this.conf = conf;
     this.showMoveValues = false;
+
+    gameNotifier.prototype.drawBoard = function(board, game) {
+      return alert("GameNotifier must implement drawBoard");
+    };
+
+    gameNotifier.prototype.drawMoves = function(data, game) {
+      return alert("GameNotifier must implement drawMoves");
+    };
+
+    gameNotifier.prototype.setShowMoveValues = function(showMoveValues) {
+      this.showMoveValues = showMoveValues;
+    };
   }
-
-  _Class.prototype.drawBoard = function(board, game) {
-    return alert("GameNotifier must implement drawBoard");
-  };
-
-  _Class.prototype.drawMoves = function(data, game) {
-    return alert("GameNotifier must implement drawMoves");
-  };
-
-  _Class.prototype.setShowMoveValues = function(showMoveValues) {
-    this.showMoveValues = showMoveValues;
-  };
-
-  return _Class;
-
+  return gameNotifier;
 })();
+
 
 reduce = function(num, denom) {
   var d, gcd;
@@ -229,6 +228,7 @@ window.GCAPI.Game = Game = (function() {
     retval = "";
     if (this.isC()) {
       retval = "?";
+      console.log(this.params);
       _ref = this.params;
       for (k in _ref) {
         if (!__hasProp.call(_ref, k)) continue;
@@ -264,9 +264,9 @@ window.GCAPI.Game = Game = (function() {
       },
       error: function(data) {
         console.log("Get Board Values failed. Trying again");
-        return setTimeout((function() {
-          return me.getBoardValues(board, notifier);
-        }), 1000);
+        //return setTimeout((function() {
+        //  return me.getBoardValues(board, notifier);
+       // }), 1000);
       }
     });
   };
@@ -286,9 +286,9 @@ window.GCAPI.Game = Game = (function() {
       },
       error: function(data) {
         console.log("Get Possible Moves failed. Trying again");
-        return setTimeout((function() {
-          return me.getPossibleMoves(board, notifier);
-        }), 1000);
+       // return setTimeout((function() {
+       //   return me.getPossibleMoves(board, notifier);
+        //}), 1000);
       }
     });
   };
@@ -406,7 +406,7 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.updateBoard = function() {
     $(this.coverCanvas).show();
-    $(this.notifier.canvas).removeLayers();
+    $(game.notifier.canvas).removeLayers();
     return this.startBoardUpdate();
   };
 

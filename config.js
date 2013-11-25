@@ -14,7 +14,6 @@ jQuery.fn.extend({
     c = this.first();
     contents = "";
     makeRange = function(n, i) {
-      console.log("make range");
       var description, ival, retval, selected, v, value, _i, _len, _ref;
       v = i.values;
       description = i.desc;

@@ -44,15 +44,18 @@ window.game.getDimensions = function(p) {
   return [p.width, p.height];
 };
 
-window.game.notifier = (function(_super) {
+window.game.notifier = notifier = 
+    function notifier(canvas, params) {
+    gameNotifier.call(this);
+    this.canvas = canvas;
+    this.params = params;
+  };
 
-  __extends(_Class, _super);
+  notifier.prototype = new gameNotifier();
 
-  function _Class() {
-    return _Class.__super__.constructor.apply(this, arguments);
-  }
+  notifier.prototype.constructor = notifier;
 
-  _Class.prototype.drawBoard = function(board, game) {
+  notifier.prototype.drawBoard = function(board, game) {
     var change, char, color, column, index, me, row, start, x_pixels, xpos, y_pixels, ypos, _i, _j, _ref, _ref1, _results;
     me = this;
     x_pixels = Math.floor(this.canvas.width() / this.conf.width);
@@ -114,7 +117,7 @@ window.game.notifier = (function(_super) {
     return _results;
   };
 
-  _Class.prototype.drawMoves = function(data, game) {
+  notifier.prototype.drawMoves = function(data, game) {
     var color, column, move, row, val, x_pixels, xpos, y_pixels, ypos, _i, _len, _results;
     x_pixels = Math.floor(game.notifier.canvas.width() / game.notifier.conf.width);
     y_pixels = Math.floor(game.notifier.canvas.height() / game.notifier.conf.height);
@@ -170,6 +173,5 @@ window.game.notifier = (function(_super) {
     return _results;
   };
 
-  return _Class;
 
-})(GCAPI.GameNotifier);
+

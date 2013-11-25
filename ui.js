@@ -1,9 +1,9 @@
 
 window.GCAPI || (window.GCAPI = {});
 
-window.GCAPI.Ui = (function() {
+window.GCAPI.Ui = Ui =  (function() {
 
-  function _Class(game, canvas, controlPanel, vvhPanel, coverCanvas, status, bg, ratio) {
+  function Ui(game, canvas, controlPanel, vvhPanel, coverCanvas, status, bg, ratio) {
     this.game = game;
     this.canvas = canvas;
     this.controlPanel = controlPanel;
@@ -15,12 +15,12 @@ window.GCAPI.Ui = (function() {
     this._displayVVH = false;
   }
 
-  _Class.prototype.resizeBG = function() {
+  Ui.prototype.resizeBG = function() {
     this.bg.css('width', window.innerWidth);
     return this.bg.css('height', window.innerHeight);
   };
 
-  _Class.prototype.resizeCanvas = function() {
+  Ui.prototype.resizeCanvas = function() {
     var hei1, hei2, hpad, padding, wid1, wid2;
     hpad = ((window.innerHeight / 1.5 / 6) + 10) * 2;
     padding = window.innerHeight * 0.1;
@@ -46,7 +46,7 @@ window.GCAPI.Ui = (function() {
     return this.game.updateBoard();
   };
 
-  _Class.prototype.resizeVVH = function() {
+  Ui.prototype.resizeVVH = function() {
     var h, left, w;
     h = window.innerHeight / 1.2;
     w = h / 2;
@@ -67,7 +67,7 @@ window.GCAPI.Ui = (function() {
     return this.game.drawVVH();
   };
 
-  _Class.prototype.resizeControl = function() {
+  Ui.prototype.resizeControl = function() {
     var h, me, w, ypos;
     me = this;
     h = window.innerHeight / 1.2;
@@ -154,7 +154,7 @@ window.GCAPI.Ui = (function() {
     return ypos += (w - 10) + 5;
   };
 
-  _Class.prototype.startGame = function() {
+  Ui.prototype.startGame = function() {
     var me;
     me = this;
     this.resizeCanvas();
@@ -170,6 +170,6 @@ window.GCAPI.Ui = (function() {
     return this.game.startGame();
   };
 
-  return _Class;
+  return Ui;
 
 })();

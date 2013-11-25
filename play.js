@@ -3,7 +3,7 @@ $(document).ready(function() {
 jQuery.fn.extend({
   startGame: function(params) {
     var initialBoard, notify;
-    this.html("<canvas id='GCAPI-main' />\n<div id='GCAPI-noclick' />\n<canvas id='GCAPI-control' />\n<canvas id='GCAPI-vvh' />\n<div id='GCAPI-status' />");
+    $("#game").html("<canvas id='GCAPI-main' />\n<div id='GCAPI-noclick' />\n<canvas id='GCAPI-control' />\n<canvas id='GCAPI-vvh' />\n<div id='GCAPI-status' />");
     window.mainCanvas = document.getElementById('GCAPI-main');
     window.coverCanvas = document.getElementById('GCAPI-noclick');
     window.controlPanel = document.getElementById('GCAPI-control');
@@ -27,7 +27,7 @@ jQuery.fn.extend({
     $('#GCAPI-status').css('width', '100%');
     $('#GCAPI-status').css('height', '20px');
     initialBoard = game.getInitialBoard(params);
-    notify = new game.notifier($(mainCanvas), params);
+    notify = new notifier($(mainCanvas), params);
     window.gameController = new GCAPI.Game(game.asset, params, notify, initialBoard, coverCanvas, '#GCAPI-status', vvhPanel);
     window.uiController = new GCAPI.Ui(gameController, mainCanvas, controlPanel, vvhPanel, coverCanvas, '#GCAPI-status', this, GCAPI.getAspectRatio(params));
     return uiController.startGame();
