@@ -64,7 +64,7 @@ window.GCAPI.Ui = Ui =  (function() {
       width: w,
       height: h
     });
-    return this.game.drawVVH();
+  //  return this.game.drawVVH();
   };
 
   Ui.prototype.resizeControl = function() {
@@ -167,7 +167,7 @@ window.GCAPI.Ui = Ui =  (function() {
       me.resizeBG();
       return me.resizeControl();
     });
-    return this.game.startGame();
+   //return this.game.startGame();
   };
 
   return Ui;

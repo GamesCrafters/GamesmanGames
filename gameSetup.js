@@ -2,7 +2,7 @@ var gameVal = getURLVars()["game"];
 var games = Session.get("games");
 var game = games[gameVal];
 window.configurationHash = JSON.stringify(game);
-
+window.game.asset = gameVal;
 $.getScript('games/'+gameVal+'.js');
 
 function getURLVars() {

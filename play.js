@@ -25,35 +25,21 @@ jQuery.fn.extend({
     $('#GCAPI-status').css('bottom', '0px');
     $('#GCAPI-status').css('text-align', 'center');
     $('#GCAPI-status').css('width', '100%');
-    $('#GCAPI-status').css('height', '20px');
+    $('#GCAPI-status').css('height', '20px'); 
+    //temp setting
+    params = {
+      width: 3,
+      height: 3
+    };
+
     initialBoard = game.getInitialBoard(params);
-    notify = new notifier($(mainCanvas), params);
+    notify = new game.notifier(window.mainCanvas, params);
     window.gameController = new GCAPI.Game(game.asset, params, notify, initialBoard, coverCanvas, '#GCAPI-status', vvhPanel);
     window.uiController = new GCAPI.Ui(gameController, mainCanvas, controlPanel, vvhPanel, coverCanvas, '#GCAPI-status', this, GCAPI.getAspectRatio(params));
     return uiController.startGame();
   }
 });
 
-window.ensureGameFunctions = function() {
-  var problems;
-  problems = [];
-  if (!(window.game != null)) {
-    problems.push("You must create a window.game object in your game file");
-  } else {
-    if (!(window.game.getDimensions != null)) {
-      problems.push("You must define a game.getDimensions function in your game file");
-    }
-    if (!(window.game.getInitialBoard != null)) {
-      problems.push("You must define a game.getInitialBoard function in your game file");
-    }
-    if (!(window.game.notifier != null)) {
-      problems.push("You must define a game.notifier class in your game file");
-    }
-  }
-  if (problems.length > 0) {
-    alert(problems.join("\n\n"));
-    return false;
-  }
-  return true;
-};
+
+
 });
