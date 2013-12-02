@@ -1,7 +1,5 @@
 window.game || (window.game = {});
 
-window.game || (window.game = {});
-
 window.game.title = "Tic Tac Toe";
 
 window.game.asset = "ttt";
@@ -11,7 +9,7 @@ window.game.description = "This is Tic Tac Toe";
 window.game.type = "c";
 
 window.game.getInitialBoard = function(p) {
-  return "%20%20%20%20%20%20%20%20%20";
+  return "         ";
 };
 
 window.game.getDimensions = function(p) {
@@ -22,6 +20,7 @@ window.game.getDimensions = function(p) {
 window.game.notifier = notifier = 
      function notifier(canvas, conf) {
           gameNotifier.call(this);
+          this.canvasElement = canvas;
           this.canvas = canvas.getContext("2d");
          this.conf = conf;
      };
@@ -39,7 +38,7 @@ window.game.notifier = notifier =
           this.canvas.height = document.getElementById('GCAPI-main').height;
 
 
-         console.log("Board: '"+board+"'");
+         //console.log("Board: '"+board+"'");
          x_pixels = Math.floor(this.canvas.width / this.conf.width);
          y_pixels = Math.floor(this.canvas.height / this.conf.height);
          xpos = 0;
@@ -84,6 +83,47 @@ window.game.notifier = notifier =
      };
 
      notifier.prototype.drawMoves = function(data, game) {
-          console.log("drawMoves");
-          //this.canvas.addEventListener("click", halmaOnClick, false);
+          var color, column, move, row, val, x_pixels, xpos, y_pixels, ypos, i, len, results;
+          x_pixels = Math.floor(game.notifier.canvas.width / game.notifier.conf.width);
+          y_pixels = Math.floor(game.notifier.canvas.height / game.notifier.conf.height);
+          window.moves = {};
+          data = GCAPI.Game.sortMoves(data);
+          results = [];
+          for (i = 0, len = data.length; i < len; i++) {
+               move = data[i];
+               window.moves[move.move] = move;
+               color = "#000";
+               if (game.showValueMoves) {
+
+               }
+               column = row = 0;
+               if (game.isC()) {
+                    val = parseInt(move.move) - 1;
+                    column = val % 3;
+                    row = Math.floor(val/3);
+               } else {
+                    column = move.move.charCodeAt(0) - 65;
+                    row = move.move[1] - 1;
+               }
+               xpos = x_pixels * column;
+               ypos = y_pixels * row;
+               game.notifier.canvas.fillStyle="#FFF";
+               game.notifier.canvas.fillRect(xpos, ypos, x_pixels, y_pixels);
+               game.notifier.canvas.strokeStyle='#000';
+               game.notifier.canvas.strokeRect(xpos, ypos, x_pixels, y_pixels);
+
+               
+          }
+
+          function tttClick(e) {
+               var cell, r, col, mov;
+               cell = game.getCursorPosition(e);
+               r = Math.floor(parseInt(cell.ypos)/y_pixels);
+               var col = Math.floor(parseInt(cell.xpos)/x_pixels);
+              // console.log("Row: "+r+', Column: '+col);
+               var mov = r*3 + col+1;
+               game.makeMove(window.moves[mov]);
+          }
+          game.notifier.canvasElement.addEventListener("click", tttClick, false);
+          return results;
      };

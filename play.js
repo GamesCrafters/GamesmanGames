@@ -31,7 +31,7 @@ jQuery.fn.extend({
       width: 3,
       height: 3
     };
-
+    console.log(game);
     initialBoard = game.getInitialBoard(params);
     notify = new game.notifier(window.mainCanvas, params);
     window.gameController = new GCAPI.Game(game.asset, params, notify, initialBoard, coverCanvas, '#GCAPI-status', vvhPanel);
