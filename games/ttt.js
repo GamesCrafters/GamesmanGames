@@ -92,10 +92,9 @@ window.game.notifier = notifier =
           for (i = 0, len = data.length; i < len; i++) {
                move = data[i];
                window.moves[move.move] = move;
-               color = "#OOO";
+               color = "#000";
                if (game.showValueMoves) {
-                  color = game.getColor(move, data);
-                  //console.log(color);
+
                }
                column = row = 0;
                if (game.isC()) {
@@ -112,15 +111,7 @@ window.game.notifier = notifier =
                game.notifier.canvas.fillRect(xpos, ypos, x_pixels, y_pixels);
                game.notifier.canvas.strokeStyle='#000';
                game.notifier.canvas.strokeRect(xpos, ypos, x_pixels, y_pixels);
-              // if (game.showValueMoves) {
-              //     results.push(this.canvas.beginPath());
-              //     results.push(this.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2) - change, 0, Math.PI * 2, false));
-              //     results.push(this.canvas.closePath());
-              //     results.push(this.canvas.fillStyle=color);
-              //     results.push(this.canvas.fill());
-              // } else {
-              //  results.push(void 0);
-              // }
+
                
           }
 
