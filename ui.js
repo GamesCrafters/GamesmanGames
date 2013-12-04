@@ -64,7 +64,7 @@ window.GCAPI.Ui = Ui =  (function() {
       width: w,
       height: h
     });
-  //  return this.game.drawVVH();
+    //return this.game.drawVVH();
   };
 
   Ui.prototype.resizeControl = function() {
