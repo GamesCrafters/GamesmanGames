@@ -38,7 +38,7 @@ window.game.notifier = notifier =
           this.canvas.height = document.getElementById('GCAPI-main').height;
 
 
-         //console.log("Board: '"+board+"'");
+         console.log("Board: '"+board+"'");
          x_pixels = Math.floor(this.canvas.width / this.conf.width);
          y_pixels = Math.floor(this.canvas.height / this.conf.height);
          xpos = 0;
@@ -59,12 +59,11 @@ window.game.notifier = notifier =
                          color = "#F00";
                     }
               
-                    this.canvas.fillStyle = "#7F7F7F";
-                    this.canvas.fillRect(xpos,ypos,x_pixels,y_pixels);
+                    this.canvas.fillStyle = "#FFF";
+                    this.canvas.fillRect(xpos+1,ypos+1,x_pixels-2,y_pixels-2);
                     
                     if (color == "#F00") {                    
                          this.canvas.fillStyle=color;
-                         this.canvas.strokeStyle='#000';
                          this.canvas.fillRect(xpos+change,ypos+change,x_pixels - (change * 2), y_pixels - (change*2));
                          this.canvas.strokeRect(xpos+change,ypos+change,x_pixels - (change * 2), y_pixels - (change*2));
                     } else {
@@ -92,9 +91,9 @@ window.game.notifier = notifier =
           for (i = 0, len = data.length; i < len; i++) {
                move = data[i];
                window.moves[move.move] = move;
-               color = "#000";
+               color = "#FFF";
                if (game.showValueMoves) {
-
+                    color = game.getColor(move, data);
                }
                column = row = 0;
                if (game.isC()) {
@@ -107,10 +106,17 @@ window.game.notifier = notifier =
                }
                xpos = x_pixels * column;
                ypos = y_pixels * row;
-               game.notifier.canvas.fillStyle="#FFF";
+               game.notifier.canvas.fillStyle=color;
                game.notifier.canvas.fillRect(xpos, ypos, x_pixels, y_pixels);
                game.notifier.canvas.strokeStyle='#000';
                game.notifier.canvas.strokeRect(xpos, ypos, x_pixels, y_pixels);
+               // if (game.showValueMoves) {
+               //  game.notifier.canvas.beginPath();
+               //  game.notifier.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2) -change, 0, Math.PI * 2, false);
+               //  game.notifier.canvas.closePath();
+               //  game.notifier.canvas.fillStyle=color;
+               //  game.notifier.canvas.fill();
+               // }
 
                
           }
