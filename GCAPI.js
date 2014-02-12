@@ -58,14 +58,15 @@ window.GCAPI.Game = Game = (function() {
     this.params = parameters;
     this.notifier = notifierClass;
     this.startBoard = [];
-    this.previousStates = [];
-    this.nextStates = [];
+    this.allStates = [];
+    //this.nextStates = [];
     this.currentState = {
       board: {
         board: board
       },
       moves: []
     };
+    this.moveNum = 0;
     this.baseUrl = "http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/";
     this.showValueMoves = false;
     this.currentPlayer = 0;
@@ -331,42 +332,46 @@ window.GCAPI.Game = Game = (function() {
   };
 
   Game.prototype.canUndo = function() {
-    return this.previousStates.length > 0;
+    return this.allStates.length > 0;
   };
 
   Game.prototype.undo = function() {
     var pcType, pnType;
     if (this.canUndo()) {
+      this.moveNum--;
       pcType = this.getPlayerType();
       pnType = this.getPlayerType(this.nextPlayer());
       if ((pcType === pnType && pnType === "computer")) {
         while (this.canUndo()) {
           this.advancePlayer();
-          this.nextStates.push(this.currentState);
-          this.currentState = this.previousStates.pop();
+          this.currentState = this.allStates[this.moveNum];         // this.nextStates.push(this.currentState);
+          //this.currentState = this.pallStates.pop();
         }
       } else if (pcType === "computer" || pnType === "computer" && this.previousBoards.length >= 2) {
-        this.nextStates.push(this.currentState);
-        this.nextStates.push(this.previousStates.pop());
-        this.currentState = this.previousStates.pop();
+        //this.nextStates.push(this.currentState);
+       // this.nextStates.push(this.allStates.pop());
+        this.currentState = this.allStates.pop();
       } else {
+        console.log(this.moveNum);
         this.advancePlayer();
-        this.nextStates.push(this.currentState);
-        this.currentState = this.previousStates.pop();
+        //this.nextStates.push(this.currentState);
+        this.currentState = this.allStates[this.moveNum];
       }
       return this.updateBoard();
     }
   };
 
   Game.prototype.canRedo = function() {
-    return this.nextStates.length > 0;
+    return this.allStates.length > 0;
   };
 
   Game.prototype.redo = function() {
     if (this.canRedo()) {
       this.advancePlayer();
-      this.previousStates.push(this.currentState);
-      this.currentState = this.nextStates.pop();
+     // this.previousStates.push(this.currentState);
+     this.moveNum++;
+     console.log("redo: "+this.moveNum);
+      this.currentState = this.allStates[this.moveNum];
       return this.updateBoard();
     }
   };
@@ -387,8 +392,7 @@ window.GCAPI.Game = Game = (function() {
       _ref.log("Player '" + (this.getPlayerName()) + "' making move");
     }
     this.advancePlayer();
-    this.previousStates.push(this.currentState);
-    this.nextStates = [];
+    this.allStates[moveNum] = this.currentState;
     this.currentState = {
       board: move
     };
@@ -398,7 +402,7 @@ window.GCAPI.Game = Game = (function() {
   Game.prototype.getMoveHistory = function() {
     var retval, state, _i, _len, _ref;
     retval = [];
-    _ref = this.previousStates;
+    _ref = this.allStates;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       state = _ref[_i];
       retval.push(state);
@@ -411,7 +415,7 @@ window.GCAPI.Game = Game = (function() {
     $.cookie("GCAPI-currentState", JSON.stringify(this.currentState), {
       path: '/'
     });
-    $.cookie("GCAPI-previousStates", JSON.stringify(this.previousStates), {
+    $.cookie("GCAPI-previousStates", JSON.stringify(this.allStates), {
       path: '/'
     });
     return $.cookie("GCAPI-nextStates", JSON.stringify(this.nextStates), {
@@ -429,7 +433,7 @@ window.GCAPI.Game = Game = (function() {
     console.log(ns);
     if ((cs != null) && (ps != null) && (ns != null)) {
       this.currentState = JSON.parse(cs);
-      this.previousStates = JSON.parse(ps);
+      this.allStates = JSON.parse(ps);
       return this.nextStates = JSON.parse(ns);
     }
   };
@@ -475,7 +479,7 @@ window.GCAPI.Game = Game = (function() {
         _ref1.log("Drawing board state '" + this.currentState.board.board + "'");
       }
       console.log(this.notifier);
-        this.notifier.drawBoard(this.currentState.board.board,this);
+      this.notifier.drawBoard(this.currentState.board.board,this);
 
        this.currentState.moves = this.newMoves.response;
        //console.log(this.newMoves.response);
@@ -491,20 +495,34 @@ window.GCAPI.Game = Game = (function() {
     //    };
     //    return setTimeout(call, 500);
     //  } else {
-      return $(this.coverCanvas).hide();
+    if (this.gameOver(this.newMoves)) {
+        console.log("game over");
+    }
+    return $(this.coverCanvas).hide();
    //  }
   };
 
   Game.prototype.updateBoard = function() {
-    $(this.coverCanvas).show();
+    //$(this.coverCanvas).show();
     $(game.notifier.canvas).removeLayers();
     return this.startBoardUpdate();
+  };
+
+  Game.prototype.gameOver = function(moves) {
+    //console.log("Checking if end game: " + moves)
+    for (i=0; i < moves.response.length; i++) {
+      if(moves.response[i].remoteness != 0) {
+        return false;
+      }
+    }
+    return true;
   };
 
    Game.prototype.startBoardUpdate = function() {
     this.newBoardData = null;
     this.newMoves = null;
-    //console.log("'"+this.currentState.board.board+"'");
+    console.log("STARTING BOARD UPDATE");
+    $(this.coverCanvas).show();
     this.getBoardValues(this.currentState.board.board);
    return this.getPossibleMoves(this.currentState.board.board);
   };
@@ -515,8 +533,10 @@ window.GCAPI.Game = Game = (function() {
     //  _ref.log("Player '" + (this.getPlayerName()) + "' making move");
     }
     //this.advancePlayer();
-    this.previousStates.push(this.currentState);
-    this.nextStates = [];
+    console.log("make move: "+this.moveNum);
+    this.allStates[this.moveNum] = this.currentState;
+    this.moveNum++;
+    //this.nextStates = [];
     this.currentState = {
       board: move
     };

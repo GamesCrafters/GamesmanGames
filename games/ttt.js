@@ -23,6 +23,7 @@ window.game.notifier = notifier =
           this.canvasElement = canvas;
           this.canvas = canvas.getContext("2d");
          this.conf = conf;
+         this.listener = false;
      };
 
      notifier.prototype = new gameNotifier();
@@ -128,8 +129,12 @@ window.game.notifier = notifier =
                var col = Math.floor(parseInt(cell.xpos)/x_pixels);
               // console.log("Row: "+r+', Column: '+col);
                var mov = r*3 + col+1;
+               console.log("calling make move from ttt");
                game.makeMove(window.moves[mov]);
           }
-          game.notifier.canvasElement.addEventListener("click", tttClick, false);
+          if (!game.notifier.listener) {
+            game.notifier.canvasElement.addEventListener("click", tttClick, false);
+            game.notifier.listener = true;
+          }
           return results;
      };
