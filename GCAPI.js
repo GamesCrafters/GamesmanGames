@@ -76,6 +76,16 @@ window.GCAPI.Game = Game = (function() {
     if (game.type === "c") {
       this.useC();
     }
+
+    //TEMPORARY COMPUTER PLAYER
+    this.p1Comp = false;
+    this.p2Comp = false;
+    if (this.params["p1"] == 'comp') {
+      this.p1Comp = true;
+    }
+    if (this.params["p2"] == 'comp') {
+      this.p2Comp = true;
+    }
     
   }
 
@@ -325,12 +335,37 @@ window.GCAPI.Game = Game = (function() {
   };
 
   Game.prototype.playAsComputer = function(moves) {
+    console.log("COMPUTER SHOULD MOVE");
+   // move = GCAPI.Game.getMove(moves);
     moves = GCAPI.Game.sortMoves(moves);
     if (moves[0] != null) {
       return this.makeMove(moves[0]);
     }
   };
 
+   Game.getMove = function(moveList) {
+    for (var i=0; i< moveList.length; i++) {
+      curMove = moveList[i];
+      if (i == 0) {
+        bestMove = moveList[i];
+      } else {
+        if (bestMove.value == 'win') {
+          if (curMove.value == 'win' && curMove.remoteness < bestMove.remoteness) {
+            bestMove = curMove;
+          }
+        } else if (bestMove.value == 'tie') {
+          if (curMove.value == 'win' || (curMove.value == 'tie' && curMove.remoteness < bestMove.remoteness)) {
+            bestMove = curMove;
+          }
+        } else {
+          if (curMove.value == 'win' || curMove.value == 'tie' || (curMove.value == 'lose' && curMove.remoteness < bestMove.remoteness)) {
+            bestMove = curMove;
+          }
+        }
+      }
+    }
+    return bestMove.move;
+  };
   Game.prototype.canUndo = function() {
     return this.allStates.length > 0;
   };
@@ -483,7 +518,12 @@ window.GCAPI.Game = Game = (function() {
 
        this.currentState.moves = this.newMoves.response;
        //console.log(this.newMoves.response);
-       this.notifier.drawMoves(this.fixMoves(this.newMoves.response, this), this);
+       if ((this.currentPlayer == 1 && this.p2Comp) || (this.currentPlayer == 0 && this.p1Comp)) {
+          console.log("yooooo");
+          this.playAsComputer(this.fixMoves(this.newMoves.response, this));
+       } else {
+        this.notifier.drawMoves(this.fixMoves(this.newMoves.response, this), this);
+      }
     }
     // this.drawVVH();
     //  if (this.getPlayerType() === "computer") {
@@ -532,7 +572,7 @@ window.GCAPI.Game = Game = (function() {
     if ((_ref = GCAPI.console) != null) {
     //  _ref.log("Player '" + (this.getPlayerName()) + "' making move");
     }
-    //this.advancePlayer();
+    this.advancePlayer();
     console.log("make move: "+this.moveNum);
     this.allStates[this.moveNum] = this.currentState;
     this.moveNum++;

@@ -129,7 +129,7 @@ window.game.notifier = notifier =
                var col = Math.floor(parseInt(cell.xpos)/x_pixels);
               // console.log("Row: "+r+', Column: '+col);
                var mov = r*3 + col+1;
-               console.log("calling make move from ttt");
+               console.log("calling make move from ttt: " + mov);
                game.makeMove(window.moves[mov]);
           }
           if (!game.notifier.listener) {

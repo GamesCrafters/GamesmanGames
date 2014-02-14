@@ -27,9 +27,20 @@ jQuery.fn.extend({
     $('#GCAPI-status').css('width', '100%');
     $('#GCAPI-status').css('height', '20px'); 
     //temp setting
+
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
     params = {
       width: 3,
-      height: 3
+      height: 3,
+      p1: vars['p1'],
+      p2: vars['p2']
     };
     console.log(game);
     initialBoard = game.getInitialBoard(params);
