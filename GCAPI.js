@@ -519,7 +519,6 @@ window.GCAPI.Game = Game = (function() {
        this.currentState.moves = this.newMoves.response;
        //console.log(this.newMoves.response);
        if ((this.currentPlayer == 1 && this.p2Comp) || (this.currentPlayer == 0 && this.p1Comp)) {
-          console.log("yooooo");
           this.playAsComputer(this.fixMoves(this.newMoves.response, this));
        } else {
         this.notifier.drawMoves(this.fixMoves(this.newMoves.response, this), this);
@@ -536,7 +535,7 @@ window.GCAPI.Game = Game = (function() {
     //    return setTimeout(call, 500);
     //  } else {
     if (this.gameOver(this.newMoves)) {
-        console.log("game over");
+      console.log("game over");
     }
     return $(this.coverCanvas).hide();
    //  }
