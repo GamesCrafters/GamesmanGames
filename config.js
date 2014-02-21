@@ -47,8 +47,7 @@ jQuery.fn.extend({
         }
       }
     }
-    contents = "<form action='play.html' class='custom' >\n  <fieldset>\n    <legend>Player Info</legend>\n    <div class=\"row\">\n      <div class=\"three columns\">\n        <input type='text' name='player1' value='' placeholder='Player 1 Name' />\n      </div>\n      <div class=\"three columns\">\n        <div class=\"row collapse\">\n          <div class=\"six columns\">\n            <input type=\"radio\" name='p1' value='human' checked>Human</div><div class=\"six columns\">\n            <input type='radio' name='p1' value='comp'>Computer          </div>\n        </div>\n      </div>\n      <div class=\"three columns\">\n        <input type='text' name='player2' value='' placeholder='Player 2 Name' />\n      </div>\n      <div class=\"three columns\">\n        <div class=\"row collapse\">\n          <div class=\"six columns\">\n<input type='radio' name='p2' value='human' checked>Human</div><div class=\"six columns\"><input type='radio' name='p2' value='comp'>Computer</div>\n        </div>\n      </div>\n    </div>\n  </fieldset>\n  <fieldset>\n    <legend>Game Info</legend>\n    " + gameInfo + "\n  </fieldset>\n  <input type=\"hidden\" name=\"p1-type\" id=\"p1-type\" value=\"human\" />\n  <input type=\"hidden\" name=\"p2-type\" id=\"p2-type\" value=\"computer\" />\n <input type=\"hidden\" name=\"game\" id=\"game\" value=\""+window.game.asset+"\" />\n  <input type=\"hidden\" name=\"continue-game\" id=\"continue-game\" value=\"no\" />\n  <input class=\"button\" type=\"submit\" value=\"Let's Play!\" />\n </form>";
-    c.html(contents);
+   $('input#game').value(window.game.asset);
     $('#p1-human').click(function(event) {
       $('#p1-human').removeClass('secondary');
       $('#p1-comp').addClass('secondary');

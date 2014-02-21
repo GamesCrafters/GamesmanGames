@@ -28,10 +28,48 @@ $(document).ready(function() {
 <div class="row">
 	<div class="twelve columns">
 		<div id="game-config" class="twelve columns">
-			<!-- temporary hard coded until call to get inital options for games -->
-			<form>
-				<div class="row">
-
+			<form action='play.html' class='custom' >
+			  <fieldset>
+			    <legend>Player Info</legend>
+			    <div class="row">
+			      <div class="three columns">
+			        <input type='text' name='player1' value='' placeholder='Player 1 Name' />
+			      </div>     
+			      <div class="three columns">
+			        <div class="row collapse">
+			          <div class="six columns">
+			            <input type="radio" name='p1' value='human' checked>Human
+			          </div>
+			          <div class="six columns">
+			            <input type='radio' name='p1' value='comp'>Computer          
+			          </div>
+			        </div>
+			      </div>
+			      <div class="three columns">
+			        <input type='text' name='player2' value='' placeholder='Player 2 Name' />
+			      </div>
+			      <div class="three columns">
+			        <div class="row collapse">
+			          <div class="six columns">
+			            <input type='radio' name='p2' value='human' checked>Human
+			          </div>
+			          <div class="six columns">
+			            <input type='radio' name='p2' value='comp'>Computer
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			  </fieldset>
+			  <fieldset>
+			    <legend>Game Info</legend>
+				<!--This is Where the game info options will go -->
+			  </fieldset>
+			  <input type="hidden" name="p1-type" id="p1-type" value="human" />
+			  <input type="hidden" name="p2-type" id="p2-type" value="computer" />
+			  <input type="hidden" name="game" id="game" value="" />
+			  <input type="hidden" name="continue-game" id="continue-game" value="no" />
+			  <input class="button" type="submit" value="Let's Play!" />
+			</form>
 		</div>
 	</div>
 </div>
