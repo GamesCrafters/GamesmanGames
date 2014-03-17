@@ -8,6 +8,10 @@ window.game.description = "This is Achi";
 
 window.game.type = "c";
 
+window.moveCounter = 0; //This counts total number of moves made
+
+window.slidePieces = false; //Should be true when moveCounter > 5
+
 window.game.getInitialBoard = function(p) {
   return "         ";
 };
@@ -128,7 +132,10 @@ window.game.notifier = notifier =
           data = GCAPI.Game.sortMoves(data);
           results = [];
 
-
+          if (window.moveCounter > 5){
+            window.slidePieces = true; //if we've already moved 6 times total, we want to slide
+          }
+          window.moveCounter+=1; //increment our moveCounter
 
           for (i = 0, len = data.length; i < len; i++) {
                move = data[i];
