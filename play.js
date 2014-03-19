@@ -40,7 +40,9 @@ jQuery.fn.extend({
       width: 3,
       height: 3,
       p1: vars['p1'],
-      p2: vars['p2']
+      p2: vars['p2'],
+      width: vars['width'],
+      height: vars['height']
     };
     console.log(game);
     initialBoard = game.getInitialBoard(params);

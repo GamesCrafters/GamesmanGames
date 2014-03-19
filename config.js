@@ -47,7 +47,7 @@ jQuery.fn.extend({
         }
       }
     }
-   $('input#game').value(window.game.asset);
+    $('#gname').val(window.game.asset);
     $('#p1-human').click(function(event) {
       $('#p1-human').removeClass('secondary');
       $('#p1-comp').addClass('secondary');

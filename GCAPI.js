@@ -67,6 +67,8 @@ window.GCAPI.Game = Game = (function() {
       moves: []
     };
     this.moveNum = 0;
+    this.width = this.params['width'];
+    this.height = this.params['height'];
     this.baseUrl = "http://nyc.cs.berkeley.edu:8080/gcweb/service/gamesman/puzzles/";
     this.showValueMoves = false;
     this.currentPlayer = 0;
@@ -75,6 +77,8 @@ window.GCAPI.Game = Game = (function() {
     }
     if (game.type === "c") {
       this.useC();
+    } else if(game.type === "cs61c") {
+      this.cs61cproj();
     }
 
     //TEMPORARY COMPUTER PLAYER
@@ -95,6 +99,10 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.useC = function() {
     return this.baseUrl = "http://nyc.cs.berkeley.edu:8081/";
+  };
+
+  Game.prototype.cs61cproj = function() {
+    return this.baseUrl = "http://inst.eecs.berkeley.edu/~ee40-sl/connect.cgi";
   };
 
   Game.prototype.isC = function() {
@@ -485,15 +493,15 @@ window.GCAPI.Game = Game = (function() {
       return m;
     };
     moves = (function() {
-      var _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = moves.length; _i < _len; _i++) {
-        m = moves[_i];
-        _results.push(fixMove(m));
+      var i, len, results;
+      results = [];
+      for (i = 0, len = moves.length; i < len; i++) {
+        m = moves[i];
+        results.push(fixMove(m));
       }
-      return _results;
+      return results;
     })();
-    console.log(moves);
+    console.log("Fix moves result: " + moves);
     return moves;
   };
 
@@ -544,7 +552,11 @@ window.GCAPI.Game = Game = (function() {
   Game.prototype.updateBoard = function() {
     //$(this.coverCanvas).show();
     $(game.notifier.canvas).removeLayers();
-    return this.startBoardUpdate();
+    if (game.type === "cs61c") {
+      return this.projBoardUpdate();
+    } else {
+      return this.startBoardUpdate();
+    }
   };
 
   Game.prototype.gameOver = function(moves) {
@@ -648,6 +660,51 @@ window.GCAPI.Game = Game = (function() {
       x -= this.notifier.canvasElement.offsetLeft;
       y -= this.notifier.canvasElement.offsetTop;
       return {xpos: x, ypos: y};
+  };
+
+  Game.prototype.projBoardUpdate = function() {
+    var boardstring;
+    this.newBoardData = null;
+    this.newMoves = null;
+    this.boardData = this.currentState.board;
+    console.log("cs61c STARTING BOARD UPDATE");
+    $(this.coverCanvas).show();
+
+    //get possible moves
+    var me, requestUrl;
+    if (this.currentState.board.board != null) {
+        boardstring = this.currentState.board.board;
+    } else {
+      boardstring = this.currentState.board;
+    }
+    requestUrl = this.baseUrl + "?width="+this.width+"&height="+this.height+"&board=\""+boardstring+"\"&user=cs188-cn&win=2";
+    me = this;
+    return $.ajax(requestUrl, {
+      dataType: "json",
+      success: function(data) {
+       me.newMoves = data;
+       //finish board update
+        var call;
+      this.currentState = {};
+      if (me.newMoves.status === "ok") {
+          console.log(me.newMoves);
+          me.currentState.board = me.boardData;
+          me.notifier.drawBoard(me.currentState.board,me);
+
+         me.currentState.moves = me.newMoves.response;
+        me.notifier.drawMoves(me.newMoves.response, me);
+      }
+      $(me.coverCanvas).hide();
+      // if (me.gameOver(me.newMoves)) {
+      //   console.log("game over");
+      //   $(me.coverCanvas).show();
+      //   alert('Player '+me.getPlayerName()+' has won.');
+      // }
+      },
+      error: function(data) {
+        console.log("GetPossible Moves failed");
+      }
+    });
   };
 
   return Game;

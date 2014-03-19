@@ -9,11 +9,10 @@
 	<script src="ui.js"></script>
 	<script src="app.js"></script>
 	<script src="play.js"></script>
-	<script src="games/ttt.js"></script>
 	<style type="text/css">
 		body {
 			margin: 0;
-			background:url('/images/background.png') no-repeat;
+			background:url('images/background.png') no-repeat;
 			background-size:100% 100%;
 			width: 100%;
 			height: 100%;
@@ -23,7 +22,17 @@
 	</style>
 	<script type="text/javascript">
 		$(document).ready(function() {
-		$('#game').startGame();
+			var vars = [], hash;
+		    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    		for(var i = 0; i < hashes.length; i++)
+    		{
+        		hash = hashes[i].split('=');
+        		vars.push(hash[0]);
+        		vars[hash[0]] = hash[1];
+    		}
+			var gname = "games/"+vars['game']+".js";
+			$("head").append("<script src=\""+gname+"\" type=\"text/javascript\"></scr"+"ipt>");
+			$('#game').startGame();
 		});
 	</script>
 

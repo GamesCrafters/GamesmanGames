@@ -63,10 +63,28 @@ $(document).ready(function() {
 			  <fieldset>
 			    <legend>Game Info</legend>
 				<!--This is Where the game info options will go -->
+				<div class="three columns">
+			        <div class="row collapse">
+			          <div class="six columns">
+			          	<span>Width: </span>
+			            <input type="radio" name='width' value='3' checked>3
+			            <input type='radio' name='width' value='4'>4          
+			          </div>
+			        </div>
+			      </div>
+			      <div class="three columns">
+			        <div class="row collapse">
+			          <div class="six columns">
+			          	<span>Height: </span>
+			            <input type="radio" name='height' value='3' checked>3
+			            <input type='radio' name='height' value='4'>4          
+			          </div>
+			        </div>
+			      </div>
 			  </fieldset>
 			  <input type="hidden" name="p1-type" id="p1-type" value="human" />
 			  <input type="hidden" name="p2-type" id="p2-type" value="computer" />
-			  <input type="hidden" name="game" id="game" value="" />
+			  <input type="hidden" name="game" id="gname" value="" />
 			  <input type="hidden" name="continue-game" id="continue-game" value="no" />
 			  <input class="button" type="submit" value="Let's Play!" />
 			</form>

@@ -87,7 +87,7 @@ window.GCAPI.Ui = Ui =  (function() {
     });
     ypos = 5;
     $(this.controlPanel).drawImage({
-      source: "/images/undo@2x.png",
+      source: "images/undo@2x.png",
       fromCenter: false,
       layer: true,
       x: 5,
@@ -100,7 +100,7 @@ window.GCAPI.Ui = Ui =  (function() {
     });
     ypos += (w - 10) + 5;
     $(this.controlPanel).drawImage({
-      source: "/images/redo@2x.png",
+      source: "images/redo@2x.png",
       fromCenter: false,
       layer: true,
       x: 5,
@@ -113,7 +113,7 @@ window.GCAPI.Ui = Ui =  (function() {
     });
     ypos += (w - 10) + 5;
     $(this.controlPanel).drawImage({
-      source: "/images/vvh@2x.png",
+      source: "images/vvh@2x.png",
       fromCenter: false,
       layer: true,
       x: 5,
@@ -127,7 +127,7 @@ window.GCAPI.Ui = Ui =  (function() {
     });
     ypos += (w - 10) + 5;
     $(this.controlPanel).drawImage({
-      source: "/images/values@2x.png",
+      source: "images/values@2x.png",
       fromCenter: false,
       layer: true,
       x: 5,
@@ -140,7 +140,7 @@ window.GCAPI.Ui = Ui =  (function() {
     });
     ypos += (w - 10) + 5;
     $(this.controlPanel).drawImage({
-      source: "/images/settings@2x.png",
+      source: "images/settings@2x.png",
       fromCenter: false,
       x: 5,
       y: ypos,
