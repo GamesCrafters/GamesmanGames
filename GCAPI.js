@@ -77,9 +77,7 @@ window.GCAPI.Game = Game = (function() {
     }
     if (game.type === "c") {
       this.useC();
-    } else if(game.type === "cs61c") {
-      this.cs61cproj();
-    }
+    } 
 
     //TEMPORARY COMPUTER PLAYER
     this.p1Comp = false;
@@ -99,10 +97,6 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.useC = function() {
     return this.baseUrl = "http://nyc.cs.berkeley.edu:8081/";
-  };
-
-  Game.prototype.cs61cproj = function() {
-    return this.baseUrl = "http://inst.eecs.berkeley.edu/~ee40-sl/connect.cgi";
   };
 
   Game.prototype.isC = function() {
@@ -552,11 +546,7 @@ window.GCAPI.Game = Game = (function() {
   Game.prototype.updateBoard = function() {
     //$(this.coverCanvas).show();
     $(game.notifier.canvas).removeLayers();
-    if (game.type === "cs61c") {
-      return this.projBoardUpdate();
-    } else {
       return this.startBoardUpdate();
-    }
   };
 
   Game.prototype.gameOver = function(moves) {
@@ -662,50 +652,6 @@ window.GCAPI.Game = Game = (function() {
       return {xpos: x, ypos: y};
   };
 
-  Game.prototype.projBoardUpdate = function() {
-    var boardstring;
-    this.newBoardData = null;
-    this.newMoves = null;
-    this.boardData = this.currentState.board;
-    console.log("cs61c STARTING BOARD UPDATE");
-    $(this.coverCanvas).show();
-
-    //get possible moves
-    var me, requestUrl;
-    if (this.currentState.board.board != null) {
-        boardstring = this.currentState.board.board;
-    } else {
-      boardstring = this.currentState.board;
-    }
-    requestUrl = this.baseUrl + "?width="+this.width+"&height="+this.height+"&board=\""+boardstring+"\"&user=cs188-cn&win=2";
-    me = this;
-    return $.ajax(requestUrl, {
-      dataType: "json",
-      success: function(data) {
-       me.newMoves = data;
-       //finish board update
-        var call;
-      this.currentState = {};
-      if (me.newMoves.status === "ok") {
-          console.log(me.newMoves);
-          me.currentState.board = me.boardData;
-          me.notifier.drawBoard(me.currentState.board,me);
-
-         me.currentState.moves = me.newMoves.response;
-        me.notifier.drawMoves(me.newMoves.response, me);
-      }
-      $(me.coverCanvas).hide();
-      // if (me.gameOver(me.newMoves)) {
-      //   console.log("game over");
-      //   $(me.coverCanvas).show();
-      //   alert('Player '+me.getPlayerName()+' has won.');
-      // }
-      },
-      error: function(data) {
-        console.log("GetPossible Moves failed");
-      }
-    });
-  };
-
+  
   return Game;
 })();
