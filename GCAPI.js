@@ -551,12 +551,15 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.gameOver = function(moves) {
     //console.log("Checking if end game: " + moves)
-    for (i=0; i < moves.response.length; i++) {
-      if(moves.response[i].remoteness != 0) {
-        return false;
-      }
+    if (moves.response != null) {
+      for (i=0; i < moves.response.length; i++) {
+       if(moves.response[i].remoteness != 0) {
+         return false;
+       }
+     }
+     return true;
     }
-    return true;
+    return false;
   };
 
    Game.prototype.startBoardUpdate = function() {
