@@ -32,4 +32,20 @@
     <play />
   </tags>
 </game>
+
+<game>
+  <title>Baghchal</title>
+  <description>
+    Baghchal is a basic game involving some things. These things are
+    important and will play an important role in things.
+  </description>
+  <image>images/baghchal.jpg</image>
+  <asset>baghchal</asset>
+    <tags>
+    <two-player />
+    <dartboard />
+    <solved />
+    <play />
+  </tags>
+</game>
 </games>

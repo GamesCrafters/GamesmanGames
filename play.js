@@ -37,17 +37,15 @@ jQuery.fn.extend({
         vars[hash[0]] = hash[1];
     }
     params = {
-      width: 3,
-      height: 3,
       p1: vars['p1'],
       p2: vars['p2'],
       width: vars['width'],
       height: vars['height']
     };
     console.log(game);
-    initialBoard = game.getInitialBoard(params);
+    //initialBoard = game.getInitialBoard(params);
     notify = new game.notifier(window.mainCanvas, params);
-    window.gameController = new GCAPI.Game(game.asset, params, notify, initialBoard, coverCanvas, '#GCAPI-status', vvhPanel);
+    window.gameController = new GCAPI.Game(game.asset, params, notify, coverCanvas, '#GCAPI-status', vvhPanel);
     window.uiController = new GCAPI.Ui(gameController, mainCanvas, controlPanel, vvhPanel, coverCanvas, '#GCAPI-status', this, GCAPI.getAspectRatio(params));
     return uiController.startGame();
   }

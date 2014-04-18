@@ -50,7 +50,7 @@ var reduce = function(num, denom) {
 
 window.GCAPI.Game = Game = (function() {
 
-  function Game(name, parameters, notifierClass, board, coverCanvas, statusBar, vvhPanel) {
+  function Game(name, parameters, notifierClass, coverCanvas, statusBar, vvhPanel) {
     this.coverCanvas = coverCanvas;
     this.statusBar = statusBar;
     this.vvhPanel = vvhPanel;
@@ -62,7 +62,7 @@ window.GCAPI.Game = Game = (function() {
     //this.nextStates = [];
     this.currentState = {
       board: {
-        board: board
+        board: ""
       },
       moves: []
     };
@@ -414,11 +414,16 @@ window.GCAPI.Game = Game = (function() {
   };
 
   Game.prototype.startGame = function() {
+    console.log("Starting game");
     if (this.params["continue-game"] === "yes") {
       console.log("Restoring...");
       this.restoreGameState();
       console.log(this.currentState);
       console.log("Restored");
+    } else {
+      console.log("Calling getstart");
+      this.getStart();
+      this.currentState.board.board = this.startBoard;
     }
     return this.updateBoard();
   };
