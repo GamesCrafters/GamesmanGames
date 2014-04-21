@@ -42,7 +42,8 @@ jQuery.fn.extend({
       p1: vars['p1'],
       p2: vars['p2'],
       width: vars['width'],
-      height: vars['height']
+      height: vars['height'],
+      misere: vars['misere']
     };
     console.log(game);
     initialBoard = game.getInitialBoard(params);
