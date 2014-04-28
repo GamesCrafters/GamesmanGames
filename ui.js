@@ -1,4 +1,3 @@
-
 window.GCAPI || (window.GCAPI = {});
 
 window.GCAPI.Ui = Ui =  (function() {

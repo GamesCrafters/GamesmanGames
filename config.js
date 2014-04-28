@@ -48,26 +48,6 @@ jQuery.fn.extend({
       }
     }
     $('#gname').val(window.game.asset);
-    $('#p1-human').click(function(event) {
-      $('#p1-human').removeClass('secondary');
-      $('#p1-comp').addClass('secondary');
-      return $('#p1-type').val('human');
-    });
-    $('#p1-comp').click(function(event) {
-      $('#p1-human').addClass('secondary');
-      $('#p1-comp').removeClass('secondary');
-      return $('#p1-type').val('computer');
-    });
-    $('#p2-human').click(function(event) {
-      $('#p2-human').removeClass('secondary');
-      $('#p2-comp').addClass('secondary');
-      return $('#p2-type').val('human');
-    });
-    $('#p2-comp').click(function(event) {
-      $('#p2-human').addClass('secondary');
-      $('#p2-comp').removeClass('secondary');
-      return $('#p2-type').val('computer');
-    });
     $('#restartButton').click(function(event) {
       return $('#continue-game').val('no');
     });

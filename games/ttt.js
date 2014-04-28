@@ -8,10 +8,6 @@ window.game.description = "This is Tic Tac Toe";
 
 window.game.type = "c";
 
-window.game.getInitialBoard = function(p) {
-  return "         ";
-};
-
 window.game.getDimensions = function(p) {
   return [p.width, p.height];
 };

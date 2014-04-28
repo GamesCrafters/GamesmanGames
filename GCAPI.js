@@ -1,7 +1,3 @@
-var Game, reduce,
-__indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
-  __hasProp = {}.hasOwnProperty;;
-
 window.GCAPI || (window.GCAPI = {});
 
 window.GCAPI.console = console;
@@ -143,7 +139,7 @@ window.GCAPI.Game = Game = (function() {
   };
 
   Game.prototype.getColor = function(m, moves) {
-    var alpha, b, g, move, r, remoteness, remotenesses, _i, _len, _ref;
+    var alpha, b, g, move, r, remoteness, remotenesses, i, len, ref;
     console.log("getting value for:");
     console.log(m);
     remoteness = {
@@ -151,10 +147,10 @@ window.GCAPI.Game = Game = (function() {
       lose: [],
       tie: []
     };
-    for (_i = 0, _len = moves.length; _i < _len; _i++) {
-      move = moves[_i];
+    for (i = 0, len = moves.length; i < len; i++) {
+      move = moves[i];
       if (move.value != null) {
-        if (_ref = move.remoteness, __indexOf.call(remoteness[move.value], _ref) < 0) {
+        if (ref = move.remoteness) {
           remoteness[move.value].push(move.remoteness);
           remoteness[move.value].sort();
           if (move.value === "lose") {
@@ -275,21 +271,21 @@ window.GCAPI.Game = Game = (function() {
   };
 
   Game.prototype.getUrlTail = function(board) {
-    var k, retval, v, _ref, _ref1;
+    var k, retval, v, ref, ref1;
     retval = "";
     if (this.isC()) {
       retval = "?";
-      _ref = this.params;
-      for (k in _ref) {
-        v = _ref[k];
+      ref = this.params;
+      for (k in ref) {
+        v = ref[k];
         retval += "" + k + "=" + v + "&";
       }
       retval += "board=" + escape(board);
     } else {
       retval = "";
-      _ref1 = this.params;
-      for (k in _ref1) {
-        v = _ref1[k];
+      ref1 = this.params;
+      for (k in ref1) {
+        v = ref1[k];
         retval += ";" + k + "=" + v;
       }
       retval += ";board=" + escape(board);
