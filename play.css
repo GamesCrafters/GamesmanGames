@@ -1,0 +1,30 @@
+#GCAPI-main {
+    display: block;
+    position: absolute;
+}
+
+#GCAPI-noclick {
+    display: none;
+    z-index: 1000;
+    background-color: rgba(255,255,255,.5);
+    position: absolute;
+}
+
+#GCAPI-control {
+    display: block;
+    position: absolute;
+    left: 0px;
+}
+
+#GCAPI-vvh {
+    display: none;
+    position: absolute;
+}
+
+#GCAPI-status {
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width: 100%;
+    height: 20px;
+}

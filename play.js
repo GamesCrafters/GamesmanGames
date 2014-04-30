@@ -21,7 +21,7 @@ jQuery.fn.extend({
       height: vars['height'],
       misere: vars['misere']
     };
-    //initialBoard = game.getInitialBoard(params);
+    
     notify = new game.notifier($('#GCAPI-main')[0], params);
     window.gameController = new GCAPI.Game(game.asset, params, notify, $('#GCAPI-noclick')[0], '#GCAPI-status', $('#GCAPI-vvh')[0]);
     window.uiController = new GCAPI.Ui(gameController, $('#GCAPI-main')[0], $('#GCAPI-control')[0], $('#GCAPI-vvh')[0], $('#GCAPI-noclick')[0], '#GCAPI-status', this, GCAPI.getAspectRatio(params));

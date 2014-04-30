@@ -73,9 +73,9 @@ window.game.notifier = notifier =
                     char = board[index];
                     change = x_pixels * 0.1;
                     color = "#FFF";
-                    backColor = "#FFF";
+                    backColor = "lightgrey";
                     
-                    this.canvas.fillStyle = "#FFF";
+                    this.canvas.fillStyle = "lightgrey";
                     this.canvas.fillRect(xpos+1,ypos+1,x_pixels-2,y_pixels-2);
                     
                     if (char === "X" || char === "x") {
@@ -181,7 +181,7 @@ window.game.notifier = notifier =
                xpos = x_pixels * column;
                ypos = y_pixels * row;         
                   
-               game.notifier.canvas.fillStyle= "rgba(255, 255, 255, 0.5)";
+               game.notifier.canvas.fillStyle= "rgba(115, 115, 115, 0.5)";
                game.notifier.canvas.fillRect(xpos, ypos, x_pixels, y_pixels);
                
                if (game.showValueMoves) {
