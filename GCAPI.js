@@ -50,7 +50,7 @@ var reduce = function(num, denom) {
 
 window.GCAPI.Game = Game = (function() {
 
-  function Game(name, parameters, notifierClass, board, coverCanvas, statusBar, vvhPanel) {
+  function Game(name, parameters, notifierClass, coverCanvas, statusBar, vvhPanel) {
     this.coverCanvas = coverCanvas;
     this.statusBar = statusBar;
     this.vvhPanel = vvhPanel;
@@ -62,7 +62,7 @@ window.GCAPI.Game = Game = (function() {
     //this.nextStates = [];
     this.currentState = {
       board: {
-        board: board
+        board: ""
       },
       moves: []
     };
@@ -413,14 +413,18 @@ window.GCAPI.Game = Game = (function() {
     }
   };
 
+
   Game.prototype.startGame = function() {
+    console.log("Starting game");
     if (this.params["continue-game"] === "yes") {
       console.log("Restoring...");
       this.restoreGameState();
       console.log(this.currentState);
       console.log("Restored");
-    }
-    return this.updateBoard();
+      return this.updateBoard();   
+    } else {
+      return this.getStart();
+     } 
   };
 
   Game.prototype.makeMove = function(move) {
@@ -545,6 +549,7 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.updateBoard = function() {
     //$(this.coverCanvas).show();
+    //console.log("PRINTINGBOARD"+this.currentBoard.board);
     $(game.notifier.canvas).removeLayers();
       return this.startBoardUpdate();
   };
@@ -587,6 +592,27 @@ window.GCAPI.Game = Game = (function() {
     return this.updateBoard();
   };
 
+  Game.prototype.getStart = function() {
+    var me, requestUrl;
+    requestUrl = this.baseUrl + this.gameName + "/getStart";
+    me = this;
+    return $.ajax(requestUrl, {
+      dataType: "json",
+      success: function(data) {
+        me.startBoard = data.response;
+        me.currentState = {
+        board: {
+          board: me.startBoard
+        }
+      }
+        return me.updateBoard();
+      },
+      error: function(data) {
+        return console.log("Could not get start board.");
+      }
+    });
+  };
+
   Game.prototype.drawVVH = function() {
     return drawVVH(this.vvhPanel, this.getMoveHistory());
   };
@@ -619,22 +645,6 @@ window.GCAPI.Game = Game = (function() {
       y7: y + 2 / 3 * len * Math.sin(theta),
       x8: x,
       y8: y
-    });
-  };
-
-  Game.prototype.getStart = function() {
-    var me, requestUrl;
-    requestUrl = this.baseUrl + this.gameName + "/getStart";
-    me = this;
-    return $.ajax(requestUrl, {
-      dataType: "json",
-      success: function(data) {
-        me.startBoard = data;
-        return console.log(data);
-      },
-      error: function(data) {
-        return console.log("Could not get start board.");
-      }
     });
   };
 

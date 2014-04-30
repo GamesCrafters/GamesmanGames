@@ -167,7 +167,7 @@ window.GCAPI.Ui = Ui =  (function() {
       me.resizeBG();
       return me.resizeControl();
     });
-   //return this.game.startGame();
+   return this.game.startGame();
   };
 
   return Ui;
