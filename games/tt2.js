@@ -104,9 +104,14 @@ window.game.notifier = notifier =
                         }   
                     }
                     var yShift = ((y_pixels - (change * 2)) - (x_pixels - (change * 2))) / 2;
-                    var grd = this.canvas.createRadialGradient(xpos + (x_pixels / 2),ypos + (y_pixels / 2),((x_pixels / 2)) / 2,xpos + (x_pixels / 2),ypos + (y_pixels / 2),(x_pixels / 2));
-                    grd.addColorStop(0, "blue");
-                    grd.addColorStop(1, "white");
+                    // var grd = this.canvas.createRadialGradient(xpos + (x_pixels / 2),ypos + (y_pixels / 2),((x_pixels / 2)) / 2 - change,xpos + (x_pixels / 2),ypos + (y_pixels / 2),(x_pixels / 2) - change);
+                    // grd.addColorStop(0, "white");
+                    // grd.addColorStop(0.8, "#4747FF");
+                    // grd.addColorStop(1, "blue");
+
+                    
+
+
 
                     if (color == "#F00") {                    
                          this.canvas.fillStyle=color;
@@ -114,9 +119,9 @@ window.game.notifier = notifier =
                          this.canvas.strokeRect(xpos+change,ypos+change+yShift,x_pixels - (change * 2), x_pixels - (change*2));
                     } else if (color == "#00F") {
                          this.canvas.beginPath();
-                         this.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2) , 0, Math.PI * 2, false);
+                         this.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2) - change , 0, Math.PI * 2, false);
                          this.canvas.closePath();
-                         this.canvas.fillStyle=grd;
+                         this.canvas.fillStyle="blue";
                          this.canvas.fill();
                     } else {
                         if (backColor == "rgba(255,0,0,.5)") {                    
@@ -125,11 +130,12 @@ window.game.notifier = notifier =
                             this.canvas.strokeRect(xpos+change,ypos+change+yShift,x_pixels - (change * 2), x_pixels - (change*2));
                         } else if (backColor == "rgba(0,0,255,.5)") {
                             this.canvas.beginPath();
-                            this.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2), 0, Math.PI * 2, false);
+                            this.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2) - change, 0, Math.PI * 2, false);
                             this.canvas.closePath();
-                            grd.addColorStop(0, "rgba(0, 0, 255, 0.5)");
-                            grd.addColorStop(1, "rgba(255, 255, 255, 0.5)");
-                            this.canvas.fillStyle=grd;
+                            // grd.addColorStop(0, "rgba(255, 255, 255, 0.5)");
+                            // grd.addColorStop(0.8, "rgba(71, 71, 255, 0.5)");
+                            // grd.addColorStop(1, "rgba(0, 0, 255, 0.5)");
+                            this.canvas.fillStyle="rgba(0,0,255,0.5)";
                             this.canvas.fill();
                         }
                     }
@@ -179,23 +185,22 @@ window.game.notifier = notifier =
                   //console.log("Row: "+row+', Column: '+column);
 
                xpos = x_pixels * column;
-               ypos = y_pixels * row;         
-                  
-               game.notifier.canvas.fillStyle= "rgba(115, 115, 115, 0.5)";
+               ypos = y_pixels * row;     
+               change = x_pixels * 0.1;    
+               game.notifier.canvazs.fillStyle= "rgba(255, 255, 255, 0.5)";
                game.notifier.canvas.fillRect(xpos, ypos, x_pixels, y_pixels);
                
                if (game.showValueMoves) {
-                    game.notifier.canvas.strokeStyle=color;
-                    var offset = 6;
-                    game.notifier.canvas.lineWidth = 6;
-                    game.notifier.canvas.strokeRect(xpos + offset, ypos + offset, x_pixels - offset, y_pixels - offset);
+                    game.notifier.canvas.beginPath();
+                    game.notifier.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), ((x_pixels / 2) - change) / 3 , 0, Math.PI * 2, false);
+                    game.notifier.canvas.closePath();
+                    game.notifier.canvas.fillStyle=color;
+                    game.notifier.canvas.fill();
                }
-               else{
-                    game.notifier.canvas.strokeStyle='#000';
-                    game.notifier.canvas.strokeRect(xpos, ypos, x_pixels, y_pixels);
-               }
+               game.notifier.canvas.strokeStyle='#000';
+               game.notifier.canvas.strokeRect(xpos, ypos, x_pixels, y_pixels);
                game.notifier.canvas.fillStyle = "#000";
-               game.notifier.canvas.fillRect(game.notifier.canvas.width / 2 - 3, 0, 6, game.notifier.canvas.height);
+               game.notifier.canvas.fillRect(game.notifier.canvas.width / 2 - 3, 0, 4, game.notifier.canvas.height);
                // if (game.showValueMoves) {
                //  game.notifier.canvas.beginPath();
                //  game.notifier.canvas.arc(xpos + (x_pixels / 2), ypos + (y_pixels / 2), (x_pixels / 2) -change, 0, Math.PI * 2, false);
