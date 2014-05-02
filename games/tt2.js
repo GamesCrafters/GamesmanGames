@@ -187,7 +187,7 @@ window.game.notifier = notifier =
                xpos = x_pixels * column;
                ypos = y_pixels * row;     
                change = x_pixels * 0.1;    
-               game.notifier.canvazs.fillStyle= "rgba(255, 255, 255, 0.5)";
+               game.notifier.canvas.fillStyle= "rgba(255, 255, 255, 0.5)";
                game.notifier.canvas.fillRect(xpos, ypos, x_pixels, y_pixels);
                
                if (game.showValueMoves) {
