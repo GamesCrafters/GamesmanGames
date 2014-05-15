@@ -108,19 +108,9 @@ window.GCAPI.Game = Game = (function() {
 
     this.storeGameState();
     here = window.location;
-    console.log("here is here---------------------->");
-    console.log(here);
-    console.log("here is params---------------------->");
     params = here.search;
-    console.log(params);
-    console.log("here is base---------------------->");
-
-
     //base = here.origin + here.pathname.slice(0, -4) + "new";
-
     base = here.origin + "/startGame.html?game=" + this.gameName;
-    console.log(base);
-    console.log("here we go---------------------->");
     window.location = base;
     //return window.location = base + params + "&update-settings=true";
   };
