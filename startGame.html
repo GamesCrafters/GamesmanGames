@@ -26,12 +26,19 @@ $(document).ready(function() {
 });
 </script>
 
+<link rel="stylesheet" href="foundation/css/normalize.css">
+<link rel="stylesheet" href="foundation/css/foundation.css">
+
+
+<script src="foundation/js/vendor/custom.modernizr.js"></script>
+
 </head>
 <body>
 <div class="row">
 	<div class="twelve columns">
 		<div class="panel">
-			<h1 id="game-title"></h1>
+			<a href="/"><img src="images/logo.png" height="160" width="160" float="left"></img></a>
+			<h2 id="game-title" position="relative"></h2>
 		</div>
 	</div>
 </div>
@@ -45,14 +52,14 @@ $(document).ready(function() {
 			    <div class="row">
 			      <div class="three columns">
 			        <input type='text' name='player1' value='' placeholder='Player 1 Name' />
-			      </div>     
+			      </div>
 			      <div class="three columns">
 			        <div class="row collapse">
 			          <div class="six columns">
-			            <input type="radio" name='p1' value='human' checked>Human
+			            <input type="radio" name='p1' value='human' checked>  Human
 			          </div>
 			          <div class="six columns">
-			            <input type='radio' name='p1' value='comp'>Computer          
+			            <input type='radio' name='p1' value='comp'>  Computer
 			          </div>
 			        </div>
 			      </div>
@@ -62,10 +69,10 @@ $(document).ready(function() {
 			      <div class="three columns">
 			        <div class="row collapse">
 			          <div class="six columns">
-			            <input type='radio' name='p2' value='human' checked>Human
+			            <input type='radio' name='p2' value='human' checked>  Human
 			          </div>
 			          <div class="six columns">
-			            <input type='radio' name='p2' value='comp'>Computer
+			            <input type='radio' name='p2' value='comp'>  Computer
 			          </div>
 			        </div>
 			      </div>
@@ -78,8 +85,8 @@ $(document).ready(function() {
 			        <div class="row collapse">
 			          <div class="six columns">
 			          	<span>Game type: </span>
-			            <input type='radio' name='misere' value='false' checked>Regular
-			            <input type='radio' name='misere' value='yes'>Misere
+			            <input type='radio' name='misere' value='false' checked>  Regular
+			            <input type='radio' name='misere' value='yes'>  Misere
 			          </div>
 			        </div>
 			      </div>
@@ -87,12 +94,12 @@ $(document).ready(function() {
 			        <div class="row collapse">
 			          <div class="six columns">
 			          	<span>Width: </span>
-			            <input type="radio" name='width' value='3' checked>3
-			            <input type='radio' name='width' value='4'>4
-			            <input type='radio' name='width' value='5'>5
-			            <input type='radio' name='width' value='6'>6
-			            <input type='radio' name='width' value='7'>7
-			            <input type='radio' name='width' value='8'>8          
+			            <input type="radio" name='width' value='3' checked>  3
+			            <input type='radio' name='width' value='4'>  4
+			            <input type='radio' name='width' value='5'>  5
+			            <input type='radio' name='width' value='6'>  6
+			            <input type='radio' name='width' value='7'>  7
+			            <input type='radio' name='width' value='8'>  8
 			          </div>
 			        </div>
 			      </div>
@@ -100,12 +107,12 @@ $(document).ready(function() {
 			        <div class="row collapse">
 			          <div class="six columns">
 			          	<span>Height: </span>
-			            <input type="radio" name='height' value='3' checked>3
-			            <input type='radio' name='height' value='4'>4
-			            <input type='radio' name='height' value='5'>5 
-			            <input type='radio' name='height' value='6'>6
-			            <input type='radio' name='height' value='7'>7 
-			            <input type='radio' name='height' value='8'>8          
+			            <input type="radio" name='height' value='3' checked>  3
+			            <input type='radio' name='height' value='4'>  4
+			            <input type='radio' name='height' value='5'>  5
+			            <input type='radio' name='height' value='6'>  6
+			            <input type='radio' name='height' value='7'>  7
+			            <input type='radio' name='height' value='8'>  8
 			          </div>
 			        </div>
 			      </div>
@@ -114,11 +121,13 @@ $(document).ready(function() {
 			  <input type="hidden" name="p2-type" id="p2-type" value="computer" />
 			  <input type="hidden" name="game" id="gname" value="" />
 			  <input type="hidden" name="continue-game" id="continue-game" value="no" />
-			  <input class="button" type="submit" value="Let's Play!" />
+			  <input class="button radius expand" type="submit" value="Let's Play!" />
 			</form>
 		</div>
 	</div>
 </div>
+
+
 
 
 <script src="foundation/js/vendor/jquery.js"></script>

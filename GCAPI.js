@@ -108,9 +108,21 @@ window.GCAPI.Game = Game = (function() {
 
     this.storeGameState();
     here = window.location;
+    console.log("here is here---------------------->");
+    console.log(here);
+    console.log("here is params---------------------->");
     params = here.search;
-    base = here.origin + here.pathname.slice(0, -4) + "new";
-    return window.location = base + params + "&update-settings=true";
+    console.log(params);
+    console.log("here is base---------------------->");
+
+
+    //base = here.origin + here.pathname.slice(0, -4) + "new";
+
+    base = here.origin + "/startGame.html?game=" + this.gameName;
+    console.log(base);
+    console.log("here we go---------------------->");
+    window.location = base;
+    //return window.location = base + params + "&update-settings=true";
   };
 
    Game.prototype.setDrawProcedure = function(draw) {
@@ -455,18 +467,18 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.storeGameState = function() {
 
-    // $.cookie();
-    // console.log("successful")
-    //
-    // $.cookie("GCAPI-currentState", JSON.stringify(this.currentState), {
-    //   path: '/'
-    // });
-    // $.cookie("GCAPI-previousStates", JSON.stringify(this.allStates), {
-    //   path: '/'
-    // });
-    // return $.cookie("GCAPI-nextStates", JSON.stringify(this.nextStates), {
-    //   path: '/'
-    // });
+    $.cookie();
+    console.log("successful")
+
+    $.cookie("GCAPI-currentState", JSON.stringify(this.currentState), {
+      path: '/'
+    });
+    $.cookie("GCAPI-previousStates", JSON.stringify(this.allStates), {
+      path: '/'
+    });
+    return $.cookie("GCAPI-nextStates", JSON.stringify(this.nextStates), {
+      path: '/'
+    });
   };
 
   Game.prototype.restoreGameState = function() {
