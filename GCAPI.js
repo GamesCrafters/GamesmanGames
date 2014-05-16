@@ -73,7 +73,7 @@ window.GCAPI.Game = Game = (function() {
     }
     if (game.type === "c") {
       this.useC();
-    } 
+    }
 
     //TEMPORARY COMPUTER PLAYER
     this.p1Comp = false;
@@ -84,7 +84,7 @@ window.GCAPI.Game = Game = (function() {
     if (this.params["p2"] == 'comp') {
       this.p2Comp = true;
     }
-    
+
   }
 
   Game.prototype.fakeIt = function() {
@@ -101,11 +101,14 @@ window.GCAPI.Game = Game = (function() {
 
   Game.prototype.updateSettings = function() {
     var base, here, params;
+
     this.storeGameState();
     here = window.location;
     params = here.search;
-    base = here.origin + here.pathname.slice(0, -4) + "new";
-    return window.location = base + params + "&update-settings=true";
+    //base = here.origin + here.pathname.slice(0, -4) + "new";
+    base = here.origin + "/startGame.html?game=" + this.gameName;
+    window.location = base;
+    //return window.location = base + params + "&update-settings=true";
   };
 
    Game.prototype.setDrawProcedure = function(draw) {
@@ -306,7 +309,7 @@ window.GCAPI.Game = Game = (function() {
         console.log("getboardValues success");
         me.newBoardData = data;
         return me.finishBoardUpdate();
-      }, 
+      },
       error: function(data) {
         console.log("Get Board Values failed.");
       }
@@ -417,10 +420,10 @@ window.GCAPI.Game = Game = (function() {
       this.restoreGameState();
       console.log(this.currentState);
       console.log("Restored");
-      return this.updateBoard();   
+      return this.updateBoard();
     } else {
       return this.getStart();
-     } 
+     }
   };
 
   Game.prototype.makeMove = function(move) {
@@ -449,6 +452,10 @@ window.GCAPI.Game = Game = (function() {
   };
 
   Game.prototype.storeGameState = function() {
+
+    $.cookie();
+    console.log("successful")
+
     $.cookie("GCAPI-currentState", JSON.stringify(this.currentState), {
       path: '/'
     });
@@ -661,6 +668,6 @@ window.GCAPI.Game = Game = (function() {
       return {xpos: x, ypos: y};
   };
 
-  
+
   return Game;
 })();
