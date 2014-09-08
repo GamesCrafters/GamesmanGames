@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+  <name>Achi</name>
+  <code>achi</code>
+  <history>Achi is one of the many traditional Morris type games that involve placing pieces on a board to connect three in a row. The game originated in Ghana where it is often played by children who use pebbles as pieces. In England, game pieces were found near Hadrian's Wall in northern England dating back to the 3rd or 4th century AD.</history>
+  <board>Draw six dots and connect all of the dots to each other with a line. The shape of the board after connecting the outer dots will be a hexagon.</board>
+  <pieces>Two different color pens to mark the lines.</pieces>
+  <tomove>There are two types of moves in Achi: place moves and slide moves. In a place move, you place three pieces on a board. Once all of your three pieces are on the board, you make a slide move by selecting a piece to a connected and unoccupied spot.</tomove>
+  <towin>To get three in a row either horizontally, vertically or diagonally.</towin>
+  <rules>The game is played on the nine points of intersection.[img src="achia.jpg" alt="1,2,...10 empty board" width="150"]&#13;
+Players start out with three pieces and alternate turns placing their pieces on any unoccupied point.[img src="achib.jpg" alt="1,2,...10 board with one piece per person" width="150"]The process is repeated until all counters are placed on a board. In the second phase, the first player slides his or her piece to an adjacent, vacant intersection point.[img src="achic.jpg" alt="1,2,...10 board with many pieces" width="150"]Players alternate turns until one player gets three in a row.</rules>
+  <strategies/>
+  <variants/>
+  <alternates/>
+  <pictures/>
+  <references>
+    <reference>Pentagrams.  Pentagames.  New York: Fireside, 1990.</reference>
+  </references>
+  <links/>
+  <gamescrafters>
+    <gamescrafter>Jeffrey Chiang</gamescrafter>
+    <gamescrafter>Jennifer Lee</gamescrafter>
+    <gamescrafter>Jesse Phillips</gamescrafter>
+  </gamescrafters>
+</game>
