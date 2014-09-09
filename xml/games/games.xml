@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <games>
+  
 <game>
   <title>Tic Tac Toe</title>
   <description>
@@ -64,4 +65,26 @@
     <play />
   </tags>
 </game>
+
+
+
+<game>
+  <title>Achi</title>
+  <description>
+    Achi is one of the many traditional Morris type games that involve placing pieces on a board to connect three in a row. The game originated in Ghana where it is often played by children who use pebbles as pieces. In England, game pieces were found near Hadrian's Wall in northern England dating back to the 3rd or 4th century AD.
+  </description>
+  <image>images/achi.jpg</image>
+  <asset>achi</asset>
+  <tags>
+    <two-player />
+    <dartboard />
+    <solved />
+    <play />
+  </tags>
+</game>
+
+
+
+
+
 </games>
