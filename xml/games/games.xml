@@ -64,4 +64,23 @@
     <play />
   </tags>
 </game>
+
+<game>
+  <title>Dao</title>
+  <description>
+    Dao is a simple puzzle game that involves moving a
+		counter one or two spaces. Due to the lack of documentation
+		when Dao was created, there is currently no information as
+		to how this game came into existence. The company that made
+		the game was Reveal Entertainment, Inc.
+  </description>
+  <image>images/dao.jpg</image>
+  <asset>dao</asset>
+      <tags>
+    <two-player />
+    <dartboard />
+    <solved />
+    <play />
+  </tags>
+</game>
 </games>
