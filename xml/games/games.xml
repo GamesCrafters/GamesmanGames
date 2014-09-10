@@ -51,8 +51,8 @@
     <play />
   </tags>
 </game>
-<game>
 
+<game>
   <title>Baghchal</title>
   <description>
     Baghchal is a basic game involving some things. These things are
@@ -139,5 +139,23 @@
     <play />
   </tags>
 </game>
+
+<game>
+	<title>Dodgem</title>
+	<description>
+		The game is played on 3 x 3 board that is divided into 9 evenly distributed squares. 
+		Some varieties of the board can be from a simple 3 x 3 squared 
+		chalk drawing on the floor to an actual 3 x 3 wooden playing board.
+	</description>
+	<image>images/dodgem.png</image>
+	<asset>dodgem</asset>
+	  <tags>
+    <two-player />
+    <dartboard />
+    <solved />
+    <play />
+  </tags>
+</game>
+
 </games>
 
