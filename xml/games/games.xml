@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <games>
+
 <game>
   <title>Tic Tac Toe</title>
   <description>
@@ -15,7 +16,6 @@
     <play />
   </tags>
 </game>
-
 
 <game>
 	<title>Connect 4</title>
@@ -34,14 +34,14 @@
 </game>
 
 <game>
-  <title>Baghchal</title>
-  <description>
-    Baghchal is a basic game involving some things. These things are
+	<title>Achi</title>
+	<description>
+		Achi is a basic game involving some things. These things are
     important and will play an important role in things.
-  </description>
-  <image>images/baghchal.jpg</image>
-  <asset>baghchal</asset>
-      <tags>
+	</description>
+	<image>images/achi.png</image>
+	<asset>achi</asset>
+	  <tags>
     <two-player />
     <dartboard />
     <solved />
@@ -49,19 +49,4 @@
   </tags>
 </game>
 
-<game>
-  <title>Tic Tac Two</title>
-  <description>
-    Tic Tac Toe is a basic game involving some things. These things are
-    important and will play an important role in things.
-  </description>
-  <image>images/ttt.png</image>
-  <asset>tt2</asset>
-  <tags>
-    <two-player />
-    <dartboard />
-    <solved />
-    <play />
-  </tags>
-</game>
 </games>
