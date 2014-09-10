@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="stylesheets/play.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="globals.js"></script>
 	<script src="jcanvas.js"></script>
@@ -10,11 +9,11 @@
 	<script src="ui.js"></script>
 	<script src="app.js"></script>
 	<script src="play.js"></script>
-        <script src="foundation/js/vendor/jquery.cookie.js"></script>
+	<script src="games/achi.js"></script>
 	<style type="text/css">
 		body {
 			margin: 0;
-			background:url('images/background.png') no-repeat;
+			background:url('/images/background.png') no-repeat;
 			background-size:100% 100%;
 			width: 100%;
 			height: 100%;
@@ -22,19 +21,9 @@
 			min-height: 100%;
 		}
 	</style>
-        <script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
-			var vars = [], hash;
-		    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    		for(var i = 0; i < hashes.length; i++)
-    		{
-        		hash = hashes[i].split('=');
-        		vars.push(hash[0]);
-        		vars[hash[0]] = hash[1];
-    		}
-			var gname = "games/"+vars['game']+".js";
-			$("head").append("<script src=\""+gname+"\" type=\"text/javascript\"></scr"+"ipt>");
-			$('#game').startGame();
+		$('#game').startGame();
 		});
 	</script>
 
@@ -42,11 +31,6 @@
 
 <body>
 	<div id="game">
-		<canvas id='GCAPI-main' ></canvas>
-		<div id='GCAPI-noclick'></div>
-		<canvas id='GCAPI-control' ></canvas>
-		<canvas id='GCAPI-vvh' ></canvas>
-		<div id='GCAPI-status' ></div>
 	</div>
 
 </body>
