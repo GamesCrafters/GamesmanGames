@@ -62,7 +62,6 @@
 	<asset>dodgem</asset>
 	  <tags>
     <two-player />
-    <dartboard />
     <solved />
     <play />
   </tags>
