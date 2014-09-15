@@ -83,4 +83,19 @@
     <play />
   </tags>
 </game>
+
+<game>
+  <title>Quickchess</title>
+  <description>
+    Quickchess is a miniature version of chess, played on a small (usually
+    4x3) board. Both players only have a rook, queen, and king.
+  </description>
+  <image>images/quickchess.png</image>
+  <asset>quickchess</asset>
+  <tags>
+    <two-player />
+    <solved />
+    <play />
+  </tags>
+</game>
 </games>
