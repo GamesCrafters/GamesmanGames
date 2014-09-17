@@ -98,4 +98,18 @@
     <play />
   </tags>
 </game>
+
+<game>
+  <title>Dragons and Swans</title>
+  <description>
+    Dragons and Swans is a "game of soldiers."
+  </description>
+  <image>images/swans.png</image>
+  <asset>swans</asset>
+  <tags>
+    <two-player />
+    <solved />
+    <play />
+  </tags>
+</game>
 </games>
