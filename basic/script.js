@@ -8,6 +8,7 @@ $(function () {
 
 function refresh() {
   getStart($('#game-input').val(), function (start) {
+    $('#position').val(start);
     drawBoard(Snap('#main-svg'), start);
   });
 }
