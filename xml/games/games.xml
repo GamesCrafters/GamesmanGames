@@ -111,4 +111,17 @@
     <play />
   </tags>
 </game>
+
+<game>
+  <title>Othello</title>
+  <description>
+    Othello is my favorite game.
+  </description>
+  <image>images/othello.png</image>
+  <asset>othello</asset>
+  <tags>
+    <two-player />
+    <play />
+  </tags>
+</game>
 </games>
