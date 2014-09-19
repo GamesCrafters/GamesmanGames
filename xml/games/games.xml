@@ -34,14 +34,17 @@
 </game>
 
 <game>
-	<title>Achi</title>
-	<description>
-		Achi is a basic game involving some things. These things are
-    important and will play an important role in things.
-	</description>
-	<image>images/achi.png</image>
-	<asset>achi</asset>
-	  <tags>
+  <title>Achi</title>
+  <description>
+    Achi is one of the many traditional Morris type games that involve placing
+    pieces on a board to connect three in a row. The game originated in Ghana where
+    it is often played by children who use pebbles as pieces. In England, game
+    pieces were found near Hadrian's Wall in northern England dating back to the
+    3rd or 4th century AD.  important and will play an important role in things.
+  </description>
+  <image>images/achi.png</image>
+  <asset>achi</asset>
+  <tags>
     <two-player />
     <dartboard />
     <solved />
