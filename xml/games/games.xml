@@ -152,6 +152,16 @@
 	  <tags>
     <two-player />
     <dartboard />
+
+<game>
+  <title>Tile Chess</title>
+  <description>
+  A game that combines chess and dominoes on an infintely large board.
+  </description>
+  <image>images/tile_chess.png</image>
+  <asset>tileChess</asset>
+  <tags>
+    <two-player />
     <solved />
     <play />
   </tags>
