@@ -32,6 +32,10 @@ function drawBoard (svg, boardString) {
       r.attr({
         'fill': 'grey'
       });
+    }
+  }
+  for (var x = 0; x < 4; x++) {
+    for (var y = 0; y < 4; y++) {
       var c = boardString[x + y * 4];
       var s;
       if (c === 'B') {
@@ -48,15 +52,17 @@ function drawBoard (svg, boardString) {
       }
       if (s) {
         s.click(function () {
-          s.selected = !s.selected;
-          if (s.selected) {
-            this.attr({
+          this.selected = !this.selected;
+          if (this.selected) {
+            this.animate({
               'r': 50,
-            });
+              //'cx': (this.attr('cx') - 0) + 100
+            }, 200);
           } else {
-            this.attr({
+            this.animate({
               'r': 40,
-            });
+              //'cx': this.attr('cx') - 100
+            }, 200);
           }
         });
       }
