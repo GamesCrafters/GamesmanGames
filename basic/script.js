@@ -125,14 +125,19 @@ function drawBoard (svg, boardString) {
     var p_elip4 = svg.paper.ellipse(100, 470, 5, 100).attr({fill: "saddlebrown", stroke: "#000", filter: f_blur});
     var pattern = svg.paper.g(p_rect, p_elip, p_elip2, p_elip3, p_elip4).pattern(50, 20, 100, 900);
   board.attr({
-      fill: pattern,
+      fill: "#888",
       stroke : "#000",
       strokeWidth: 5
   });
+  var transformgrid  = [];
+  for (a=0;a<4;a++) {
+      transformgrid[a] = [];
+  }  
   var grid = [];
   for (a=0;a<4;a++) {
       grid[a] = [];
   }
+  var background1 = svg.g(board);
   var exist = [];
   for (a=0;a<4;a++) {
       exist[a] = [];
@@ -144,7 +149,8 @@ function drawBoard (svg, boardString) {
       var oldy = y;
       var y = y;
       //subtract to modify distance of arrows to outeredge
-      y = y - 50;
+      y = y;
+      l = Math.sqrt(Math.pow(x - endx, 2) + Math.pow(y - endy, 2)) - 40; 
       if (start == 1) {
           var r = w/2;
           t = svg.polygon(x, y, x + r, y, x + r, y - l + 2 * w, x + w, y - l + 2 * w, x, y - l, x - w, y - l + 2 * w, x - r, y - l + 2 * w, x - r, y, x, y);
@@ -179,16 +185,25 @@ function drawBoard (svg, boardString) {
           }
       }
       var trans = "r"
-      var final = trans + theta + " "  + x + " " + oldy;
-      t.transform(final);
+      var final_transform = trans + theta + " "  + x + " " + oldy;
+      t.transform(final_transform);
       t.attr("class", "hover_group");
       t.attr({id: "arrow"});
       t.attr({fill: "green"});
-      return t;
+      return svg.g(t);
   }
   function daoDrawArrow(x, y, endx, endy, w, l, start, piece, endcorx, endcory) {
       temp = drawArrow(x, y, endx, endy, w, l, start);
       temp.node.onclick = callback([endcorx, endcory], piece);
+      var background = svg.rect();
+      var clon = svg.circle().attr({r: parseFloat(piece.attr("r")) + 10, cx: parseFloat(piece.attr("cx")), cy: parseFloat(piece.attr("cy"))});
+      clon.attr({fill: "white", opacity: 1});
+      background.attr({fill: "#FFF", height: "100%", width: "100%"})
+      clon.attr({fill: "black", opacity: 1});
+      // clon.remove();
+      // background.remove();
+      temp.attr({mask: svg.g(background, clon)});
+      console.log("hi")
   }
   var callback = function (location, ppiece) {
       var move = function() {
@@ -341,31 +356,7 @@ function drawBoard (svg, boardString) {
           for (var i = 0; i < locations.length; i++) {
               var arrowx = grid[parseFloat(piece.attr("x"))][parseFloat(piece.attr("y"))][0] - 10;
               var arrowy = grid[parseFloat(piece.attr("x"))][parseFloat(piece.attr("y"))][1];
-              daoDrawArrow(arrowx + 10, arrowy, grid[locations[i][0]][locations[i][1]][0], grid[locations[i][0]][locations[i][1]][1], 10, 40, 1, piece, locations[i][0], locations[i][1]);
-              //daoDrawArrow(arrowx + 10, arrowy, grid[locations[i][0]][locations[i][1]][0], grid[locations[i][0]][locations[i][1]][1], 10, 40, 2, piece, locations[i][0], locations[i][1]);
-              // var arrowl = 20;
-              // var arroww = 20;
-              // var location = locations[i];
-              // if (location[0] - wt == 0) {
-              //     arrowl = arrowl + 20;
-              //     if (location[1] - ht > 0) {
-              //         arrowy = arrowy + 30;
-              //     } else {
-              //         arrowy = arrowy - 50;
-              //     }
-              // } else {
-              //     arroww = arroww + 20;
-              //     if (location[0] - wt > 0) {
-              //         arrowx = arrowx + 30;
-              //     } else {
-              //         arrowx = arrowx - 50;
-              //     }
-              // }
-              // var arrow = svg.rect(arrowx, arrowy, arroww, arrowl);
-              // arrow.attr("class", "hover_group");
-              // //arrow.attr({id: "arrow"});
-              // arrow.attr({fill: "green"});
-              //arrow.node.onclick = callback(location, piece);
+              daoDrawArrow(arrowx + 10, arrowy, grid[locations[i][0]][locations[i][1]][0], grid[locations[i][0]][locations[i][1]][1], 20, 150, 1, piece, locations[i][0], locations[i][1]);
           }
       };
       return calculatemoves;
@@ -397,13 +388,25 @@ function drawBoard (svg, boardString) {
       }
       return play;
   }
+  var startposition = [0, 3, 5,6,9,10,12,15];
   var change = 0;
+  var piecenum = 0;
+  var startgrid = []
   for (k = 0; k < 4; k++) {
       for (l = 0; l < 4; l++) {
           console.log(l);
           var h = 0;
+          var f_blur2 = svg.paper.filter(Snap.filter.blur(10, 10));
           Snap.load("Yin_yang.svg", function (f) {
               frag = f;
+              // if (startposition.indexOf(h) > -1) {          
+              //     if (player == 1) {
+              //         f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#ffd700"})
+              //     } else {
+              //         f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"}) 
+              //     }
+              // }
+              f.selectAll("*").attr({filter: f_Shadow});
               // f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
               var g = svg.g(f.selectAll('*'));
               var height = Math.floor(h / 4);
@@ -420,19 +423,45 @@ function drawBoard (svg, boardString) {
               temp0 = temp0.concat(temp1);
               temp0 = temp0.concat(',');
               temp0 = temp0.concat(temp2);
+              transformgrid[width][height] = temp0;
               console.log(g);
               g.transform(temp0);
               //f.transform( 't100,100');
               g.attr({"x": x, "y": y});
               g.attr({"gx": width});
               g.attr({"gy": height});
-               svg.append(f);
-              var startposition = [0, 3, 5,6,9,10,12,15];
+              svg.append(f);
+              background1.append(g);
               if (startposition.indexOf(h) > -1) {
                   if (1) {
+                      startgrid.push([width, height]);
                       // console.log(svg.g(f.selectAll('*')).getAttribute("x"));
                       // var xloc = parseFloat(g.attr("x")) * 2/5 + 230;
                       // var yloc = parseFloat(g.attr("y")) * 2/5 + 230;
+                      Snap.load("Yin_yang.svg", function (a) {
+                          var piecex = startgrid[piecenum][0];
+                          var piecey = startgrid[piecenum][1];
+                          piecenum = piecenum + 1;
+                          if (player == 1) {
+                              a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#ffd700"});
+                          } else {
+                              a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
+                          }
+                          if (piecenum % 4 == 0 && piecenum != 0) {
+                              player = player + 1;
+                          }
+                          player = (player + 1) % 2;
+                          var yypiece = svg.g(a.selectAll('*'));                         
+                          if (player == 1) {
+                              //for alternation of piece placing
+                              yypiece.attr({id: "p1"});
+                          } else {
+                              yypiece.attr({id: "p2"});
+                          }
+                          yypiece.attr({gx: piecex, gy: piecey});
+                          yypiece.transform(transformgrid[piecex][piecey]);
+                          svg.append(yypiece);
+                      });
                       var wt = parseFloat(g.attr("gx")); 
                       var ht = parseFloat(g.attr("gy"));
                       var xloc = grid[wt][ht][0];
@@ -457,18 +486,22 @@ function drawBoard (svg, boardString) {
                       // player = (player + 1 + (Math.floor(change / 4))) % 2;
                       if (player == 0) {
                           turn = turn + 1;
-                          color = "red";
+                          color = "blue";
                           gamepiece.attr({fill: color});
                       } else {
                           turn = turn + 1;
-                          color = "yellow";
+                          color = "gold";
                           gamepiece.attr({fill: color});
                       }
                       if (change % 4 == 0 && change != 0) {
                           player = player + 1;
                       }
                       player = (player + 1) % 2;
+                      
+                      var f_blur2 = svg.paper.filter(Snap.filter.blur(5, 1));
                       gamepiece.attr({opacity: .7, filter: f_Shadow});
+                      // var newgamepiece = svg.g(gamepiece);
+                      // newgamepiece.attr({filter: f_blur2});
                       //gamepiece.node.onclick = piececallback(gamepiece);
                   }
               }
