@@ -149,7 +149,6 @@ function drawBoard (svg, boardString) {
       var oldy = y;
       var y = y;
       //subtract to modify distance of arrows to outeredge
-      y = y;
       l = Math.sqrt(Math.pow(x - endx, 2) + Math.pow(y - endy, 2)) - 40; 
       if (start == 1) {
           var r = w/2;
@@ -198,9 +197,9 @@ function drawBoard (svg, boardString) {
       var background = svg.rect();
       //var clon = svg.circle().attr({r: parseFloat(piece.attr("r")) + 10, cx: parseFloat(piece.attr("cx")), cy: parseFloat(piece.attr("cy"))});
       var location = grid[parseFloat(piece.attr("gx"))][parseFloat(piece.attr("gy"))];
-      var clon = svg.circle().attr({r: 70, cx: location[0], cy: location[1]})
+      var clon = svg.circle().attr({r: 90, cx: location[0], cy: location[1]})
       clon.attr({fill: "white", opacity: 1});
-      background.attr({fill: "#FFF", height: "100%", width: "100%"})
+      background.attr({fill: "#fff", height: "100%", width: "100%"})
       clon.attr({fill: "black", opacity: 1});
       // clon.remove();
       // background.remove();
@@ -216,7 +215,7 @@ function drawBoard (svg, boardString) {
           exist[parseFloat(ppiece.attr("gx"))][parseFloat(ppiece.attr("gy"))] = 0;
           exist[location[0]][location[1]] = 1;
           //ppiece.animate({cx:tlocation[0], cy:tlocation[1]}, 500);
-          ppiece.transform(tlocation);
+          ppiece.animate({transform: tlocation}, 1500, mina.bounce);
           var pieces = svg.selectAll("#" + ppiece.attr("id"));
           // pieces.forEach( function(entry) {
           //     entry.animate({r : parseFloat(entry.attr("r")) - 10}, 100);
@@ -433,8 +432,10 @@ function drawBoard (svg, boardString) {
                       // var xloc = parseFloat(g.attr("x")) * 2/5 + 230;
                       // var yloc = parseFloat(g.attr("y")) * 2/5 + 230;
                       Snap.load("Yin_yang.svg", function (a) {
+                          console.log(player)
                           var piecex = startgrid[piecenum][0];
                           var piecey = startgrid[piecenum][1];
+                          exist[piecex][piecey] = 1;
                           piecenum = piecenum + 1;
                           if (player == 1) {
                               a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#ffd700"});
@@ -442,7 +443,6 @@ function drawBoard (svg, boardString) {
                               a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
                           }
                           var yypiece = svg.g(a.selectAll('*'));
-                          console.log(piecenum)
                           if (player == 0) {
                               //for alternation of piece placing
                               yypiece.attr({id: "yp1"});
@@ -460,44 +460,44 @@ function drawBoard (svg, boardString) {
                           //yypiece.node.onclick = piececallback(yypiece);
                   
                       });
-                      var wt = parseFloat(g.attr("gx")); 
-                      var ht = parseFloat(g.attr("gy"));
-                      var xloc = grid[wt][ht][0];
-                      var yloc = grid[wt][ht][1];
-                      exist[wt][ht] = 1;
-                      var gamepiece = svg.circle(xloc, yloc, 90);
-                      gamepiece.attr({"position": [width,height]});
-                      gamepiece.attr({"x": wt});
-                      gamepiece.attr({"y": ht});
-                      gamepiece.animate({r:70}, 500);
-                      gamepiece.animate({cx:xloc, cy:yloc}, 500);
-                      // gamepiece.node.animate({opacity: 0}, 1000);
-                      gamepiece.attr({animation: "popup 10s 6.5s ease infinite"});
-                      if (player == 0) {
-                          //for alternation of piece placing
-                          gamepiece.attr({id: "p1"});
-                          change = change + 1;
-                      } else {
-                          gamepiece.attr({id: "p2"});
-                          change = change + 1;
-                      }
-                      // player = (player + 1 + (Math.floor(change / 4))) % 2;
-                      if (player == 0) {
-                          turn = turn + 1;
-                          color = "blue";
-                          gamepiece.attr({fill: color});
-                      } else {
-                          turn = turn + 1;
-                          color = "gold";
-                          gamepiece.attr({fill: color});
-                      }
-                      if (change % 4 == 0 && change != 0) {
-                          player = player + 1;
-                      }
-                      player = (player + 1) % 2;
+                      // var wt = parseFloat(g.attr("gx")); 
+                      // var ht = parseFloat(g.attr("gy"));
+                      // var xloc = grid[wt][ht][0];
+                      // var yloc = grid[wt][ht][1];
+                      // exist[wt][ht] = 1;
+                      // var gamepiece = svg.circle(xloc, yloc, 90);
+                      // gamepiece.attr({"position": [width,height]});
+                      // gamepiece.attr({"x": wt});
+                      // gamepiece.attr({"y": ht});
+                      // gamepiece.animate({r:70}, 500);
+                      // gamepiece.animate({cx:xloc, cy:yloc}, 500);
+                      // // gamepiece.node.animate({opacity: 0}, 1000);
+                      // gamepiece.attr({animation: "popup 10s 6.5s ease infinite"});
+                      // if (player == 0) {
+                      //     //for alternation of piece placing
+                      //     gamepiece.attr({id: "p1"});
+                      //     change = change + 1;
+                      // } else {
+                      //     gamepiece.attr({id: "p2"});
+                      //     change = change + 1;
+                      // }
+                      // // player = (player + 1 + (Math.floor(change / 4))) % 2;
+                      // if (player == 0) {
+                      //     turn = turn + 1;
+                      //     color = "blue";
+                      //     gamepiece.attr({fill: color});
+                      // } else {
+                      //     turn = turn + 1;
+                      //     color = "gold";
+                      //     gamepiece.attr({fill: color});
+                      // }
+                      // if (change % 4 == 0 && change != 0) {
+                      //     player = player + 1;
+                      // }
+                      // player = (player + 1) % 2;
                       
-                      var f_blur2 = svg.paper.filter(Snap.filter.blur(5, 1));
-                      gamepiece.attr({opacity: .7, filter: f_Shadow});
+                      // var f_blur2 = svg.paper.filter(Snap.filter.blur(5, 1));
+                      // gamepiece.attr({opacity: .7, filter: f_Shadow});
                       // var newgamepiece = svg.g(gamepiece);
                       // newgamepiece.attr({filter: f_blur2});
                       //gamepiece.node.onclick = piececallback(gamepiece);
