@@ -28,10 +28,10 @@ function checkWin(player) {
     var players = player
     //check in horizontal line
     var inrow  = 0;
-    var x = players[0].attr("x");
-    var y = players[0].attr("y");
+    var x = players[0].attr("gx");
+    var y = players[0].attr("gy");
     players.forEach( function(entry) {
-        if (entry.attr("x") == x) {
+        if (entry.attr("gx") == x) {
             inrow = inrow + 1;
         }
     });
@@ -42,7 +42,7 @@ function checkWin(player) {
     //check in vertical line
     var incol = 0;
     players.forEach( function(entry) {
-        if (entry.attr("y") == y) {
+        if (entry.attr("gy") == y) {
             incol = incol + 1;
         }
     });
@@ -55,12 +55,12 @@ function checkWin(player) {
     var otherx = -1;
     var othery = -1;
     players.forEach( function(entry) {
-        var diffx = Math.abs(parseFloat(entry.attr("x")) - x);
-        var diffy = Math.abs(parseFloat(entry.attr("y")) - y);    
+        var diffx = Math.abs(parseFloat(entry.attr("gx")) - x);
+        var diffy = Math.abs(parseFloat(entry.attr("gy")) - y);    
         diffs.push([diffx, diffy]);
         if (diffx == 1 && diffy == 1) {
-            otherx = parseFloat(entry.attr("x"));
-            othery = parseFloat(entry.attr("y"));
+            otherx = parseFloat(entry.attr("gx"));
+            othery = parseFloat(entry.attr("gy"));
         }
     });
     var square = [[1,1],[1,0],[0,1]];
@@ -78,8 +78,8 @@ function checkWin(player) {
     diffs = [];
     if (square.length == 0) {
         players.forEach( function(entry) {
-            var diffx = Math.abs(parseFloat(entry.attr("x")) - otherx);
-            var diffy = Math.abs(parseFloat(entry.attr("y")) - othery);    
+            var diffx = Math.abs(parseFloat(entry.attr("gx")) - otherx);
+            var diffy = Math.abs(parseFloat(entry.attr("gy")) - othery);    
             diffs.push([diffx, diffy]);
         });
         square = [[1,1],[1,0],[0,1]];
@@ -196,7 +196,9 @@ function drawBoard (svg, boardString) {
       temp = drawArrow(x, y, endx, endy, w, l, start);
       temp.node.onclick = callback([endcorx, endcory], piece);
       var background = svg.rect();
-      var clon = svg.circle().attr({r: parseFloat(piece.attr("r")) + 10, cx: parseFloat(piece.attr("cx")), cy: parseFloat(piece.attr("cy"))});
+      //var clon = svg.circle().attr({r: parseFloat(piece.attr("r")) + 10, cx: parseFloat(piece.attr("cx")), cy: parseFloat(piece.attr("cy"))});
+      var location = grid[parseFloat(piece.attr("gx"))][parseFloat(piece.attr("gy"))];
+      var clon = svg.circle().attr({r: 70, cx: location[0], cy: location[1]})
       clon.attr({fill: "white", opacity: 1});
       background.attr({fill: "#FFF", height: "100%", width: "100%"})
       clon.attr({fill: "black", opacity: 1});
@@ -207,18 +209,20 @@ function drawBoard (svg, boardString) {
   }
   var callback = function (location, ppiece) {
       var move = function() {
-          var tlocation = grid[location[0]][location[1]];
+          //var tlocation = grid[location[0]][location[1]];
+          var tlocation = transformgrid[location[0]][location[1]];
           $("[id=arrow]").remove();
           svg.append(ppiece);
-          exist[parseFloat(ppiece.attr("x"))][parseFloat(ppiece.attr("y"))] = 0;
+          exist[parseFloat(ppiece.attr("gx"))][parseFloat(ppiece.attr("gy"))] = 0;
           exist[location[0]][location[1]] = 1;
-          ppiece.animate({cx:tlocation[0], cy:tlocation[1]}, 500);
+          //ppiece.animate({cx:tlocation[0], cy:tlocation[1]}, 500);
+          ppiece.transform(tlocation);
           var pieces = svg.selectAll("#" + ppiece.attr("id"));
-          pieces.forEach( function(entry) {
-              entry.animate({r : parseFloat(entry.attr("r")) - 10}, 100);
-          });
-          ppiece.attr({"x": location[0]});
-          ppiece.attr({"y": location[1]});
+          // pieces.forEach( function(entry) {
+          //     entry.animate({r : parseFloat(entry.attr("r")) - 10}, 100);
+          // });
+          ppiece.attr({"gx": location[0]});
+          ppiece.attr({"gy": location[1]});
           if (checkWin(pieces)) {
               console.log("You have won");
               Snap.load("Potato.svg", function(f) {
@@ -236,9 +240,8 @@ function drawBoard (svg, boardString) {
   var piececallback = function (piece) {
       var calculatemoves = function() {
           //test horizontal direction to right
-          console.log(parseFloat(piece.attr("x")));
-          var wt = parseFloat(piece.attr("x"));
-          var ht = parseFloat(piece.attr("y"));
+          var wt = parseFloat(piece.attr("gx"));
+          var ht = parseFloat(piece.attr("gy"));
           var locations = [];
           var testx = wt;
           var counter = 0;
@@ -354,8 +357,8 @@ function drawBoard (svg, boardString) {
               counter = counter + 1;
           }
           for (var i = 0; i < locations.length; i++) {
-              var arrowx = grid[parseFloat(piece.attr("x"))][parseFloat(piece.attr("y"))][0] - 10;
-              var arrowy = grid[parseFloat(piece.attr("x"))][parseFloat(piece.attr("y"))][1];
+              var arrowx = grid[parseFloat(piece.attr("gx"))][parseFloat(piece.attr("gy"))][0] - 10;
+              var arrowy = grid[parseFloat(piece.attr("gx"))][parseFloat(piece.attr("gy"))][1];
               daoDrawArrow(arrowx + 10, arrowy, grid[locations[i][0]][locations[i][1]][0], grid[locations[i][0]][locations[i][1]][1], 20, 150, 1, piece, locations[i][0], locations[i][1]);
           }
       };
@@ -366,7 +369,7 @@ function drawBoard (svg, boardString) {
           $("#start").remove();
           if (player == 0) {
               player = 1;
-              var players = svg.selectAll("#p1");
+              var players = svg.selectAll("#yp1");
               for (var i = 0; i < players.length; i++ ) {
                   players[i].animate({r: parseFloat(players[i].attr("r")) + 10}, 100);
                   piececallback(players[i])();
@@ -374,7 +377,7 @@ function drawBoard (svg, boardString) {
               // $("[player = p1]").click();
           } else {
               player = 0;
-              var players = svg.selectAll("#p2");
+              var players = svg.selectAll("#yp2");
               for (var i = 0; i < players.length; i++ ) {
                   players[i].animate({r: parseFloat(players[i].attr("r")) + 10}, 100);
                   piececallback(players[i])();
@@ -382,7 +385,7 @@ function drawBoard (svg, boardString) {
               // $("[player = p2]").click();           
           }
           if (svg.selectAll("#arrow").length == 0) {
-                  console.log("You won");
+                  console.log("You won by default");
                   return 0;
           }
       }
@@ -399,13 +402,6 @@ function drawBoard (svg, boardString) {
           var f_blur2 = svg.paper.filter(Snap.filter.blur(10, 10));
           Snap.load("Yin_yang.svg", function (f) {
               frag = f;
-              // if (startposition.indexOf(h) > -1) {          
-              //     if (player == 1) {
-              //         f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#ffd700"})
-              //     } else {
-              //         f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"}) 
-              //     }
-              // }
               f.selectAll("*").attr({filter: f_Shadow});
               // f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
               var g = svg.g(f.selectAll('*'));
@@ -415,7 +411,6 @@ function drawBoard (svg, boardString) {
               var y = 500 * height - 180;
               var gridx = x * 2/5 + 230;
               var gridy = y * 2/5 + 230;
-              //grid.splice()
               grid[width][height] = [gridx, gridy];
               var temp1 = x.toString();
               var temp2 = y.toString();
@@ -426,7 +421,6 @@ function drawBoard (svg, boardString) {
               transformgrid[width][height] = temp0;
               console.log(g);
               g.transform(temp0);
-              //f.transform( 't100,100');
               g.attr({"x": x, "y": y});
               g.attr({"gx": width});
               g.attr({"gy": height});
@@ -447,20 +441,24 @@ function drawBoard (svg, boardString) {
                           } else {
                               a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
                           }
+                          var yypiece = svg.g(a.selectAll('*'));
+                          console.log(piecenum)
+                          if (player == 0) {
+                              //for alternation of piece placing
+                              yypiece.attr({id: "yp1"});
+                          } else {
+                             yypiece.attr({id: "yp2"});
+                          }
                           if (piecenum % 4 == 0 && piecenum != 0) {
                               player = player + 1;
                           }
                           player = (player + 1) % 2;
-                          var yypiece = svg.g(a.selectAll('*'));                         
-                          if (player == 1) {
-                              //for alternation of piece placing
-                              yypiece.attr({id: "p1"});
-                          } else {
-                              yypiece.attr({id: "p2"});
-                          }
+                         
                           yypiece.attr({gx: piecex, gy: piecey});
                           yypiece.transform(transformgrid[piecex][piecey]);
                           svg.append(yypiece);
+                          //yypiece.node.onclick = piececallback(yypiece);
+                  
                       });
                       var wt = parseFloat(g.attr("gx")); 
                       var ht = parseFloat(g.attr("gy"));
