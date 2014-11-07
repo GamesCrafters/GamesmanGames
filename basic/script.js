@@ -147,7 +147,8 @@ function drawBoard (svg, boardString) {
   }
   function drawArrow (x, y, endx, endy, w, l, start) {
       var oldy = y;
-      var y = y;
+      var oldx = x;
+      x = x + 20;
       //subtract to modify distance of arrows to outeredge
       l = Math.sqrt(Math.pow(x - endx, 2) + Math.pow(y - endy, 2)) - 40; 
       if (start == 1) {
@@ -159,7 +160,7 @@ function drawBoard (svg, boardString) {
           t = svg.polygon(x, y, x + r, y + w, x + r, y - l + 2 * w, x + w, y - l + 2 * w, x, y - l, x - w, y - l + 2 * w, x - r, y - l + 2 * w, x - r, y + w, x, y);
       }
       dy = oldy - endy;
-      dx = endx - x;        
+      dx = endx - oldx;        
       theta = Math.atan2(dy, dx);
       theta *= 180/Math.PI;
       if (dy < 0 && dx > 0) {
@@ -184,7 +185,7 @@ function drawBoard (svg, boardString) {
           }
       }
       var trans = "r"
-      var final_transform = trans + theta + " "  + x + " " + oldy;
+      var final_transform = trans + theta + " "  + oldx + " " + oldy;
       t.transform(final_transform);
       t.attr("class", "hover_group");
       t.attr({id: "arrow"});
@@ -195,14 +196,11 @@ function drawBoard (svg, boardString) {
       temp = drawArrow(x, y, endx, endy, w, l, start);
       temp.node.onclick = callback([endcorx, endcory], piece);
       var background = svg.rect();
-      //var clon = svg.circle().attr({r: parseFloat(piece.attr("r")) + 10, cx: parseFloat(piece.attr("cx")), cy: parseFloat(piece.attr("cy"))});
       var location = grid[parseFloat(piece.attr("gx"))][parseFloat(piece.attr("gy"))];
       var clon = svg.circle().attr({r: 90, cx: location[0], cy: location[1]})
       clon.attr({fill: "white", opacity: 1});
       background.attr({fill: "#fff", height: "100%", width: "100%"})
       clon.attr({fill: "black", opacity: 1});
-      // clon.remove();
-      // background.remove();
       temp.attr({mask: svg.g(background, clon)});
       console.log("hi")
   }
@@ -422,6 +420,7 @@ function drawBoard (svg, boardString) {
               temp0 = temp0.concat(temp2);
               transformgrid[width][height] = temp0;
           var positionpiece = svg.circle(locx, locy, 90);
+          background1.append(positionpiece);
               //console.log(g);
               //g.transform(temp0);
               //g.attr({"x": x, "y": y});
