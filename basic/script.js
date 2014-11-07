@@ -215,7 +215,10 @@ function drawBoard (svg, boardString) {
           exist[parseFloat(ppiece.attr("gx"))][parseFloat(ppiece.attr("gy"))] = 0;
           exist[location[0]][location[1]] = 1;
           //ppiece.animate({cx:tlocation[0], cy:tlocation[1]}, 500);
-          ppiece.animate({transform: tlocation}, 1500, mina.bounce);
+          var custom = function(n) {
+              return Math.pow(n, .4);
+          };
+          ppiece.animate({transform: tlocation}, 1000, custom);
           var pieces = svg.selectAll("#" + ppiece.attr("id"));
           // pieces.forEach( function(entry) {
           //     entry.animate({r : parseFloat(entry.attr("r")) - 10}, 100);
@@ -394,23 +397,23 @@ function drawBoard (svg, boardString) {
   var change = 0;
   var piecenum = 0;
   var startgrid = []
+  var h  = 0;
   for (k = 0; k < 4; k++) {
       for (l = 0; l < 4; l++) {
           console.log(l);
-          var h = 0;
           var f_blur2 = svg.paper.filter(Snap.filter.blur(10, 10));
-          Snap.load("Yin_yang.svg", function (f) {
-              frag = f;
-              f.selectAll("*").attr({filter: f_Shadow});
+          //Snap.load("Yin_yang.svg", function (f) {
+              //frag = f;
+              //f.selectAll("*").attr({filter: f_Shadow});
               // f.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
-              var g = svg.g(f.selectAll('*'));
+              //var g = svg.g(f.selectAll('*'));
               var height = Math.floor(h / 4);
               var width = h % 4;
               var x = 500 * width - 100;
               var y = 500 * height - 180;
-              var gridx = x * 2/5 + 230;
-              var gridy = y * 2/5 + 230;
-              grid[width][height] = [gridx, gridy];
+              var locx = x * 2/5 + 230;
+              var locy = y * 2/5 + 230;
+              grid[width][height] = [locx, locy];
               var temp1 = x.toString();
               var temp2 = y.toString();
               var temp0 = 's0.4 t';
@@ -418,94 +421,95 @@ function drawBoard (svg, boardString) {
               temp0 = temp0.concat(',');
               temp0 = temp0.concat(temp2);
               transformgrid[width][height] = temp0;
-              console.log(g);
-              g.transform(temp0);
-              g.attr({"x": x, "y": y});
-              g.attr({"gx": width});
-              g.attr({"gy": height});
-              svg.append(f);
-              background1.append(g);
-              if (startposition.indexOf(h) > -1) {
-                  if (1) {
-                      startgrid.push([width, height]);
-                      // console.log(svg.g(f.selectAll('*')).getAttribute("x"));
-                      // var xloc = parseFloat(g.attr("x")) * 2/5 + 230;
-                      // var yloc = parseFloat(g.attr("y")) * 2/5 + 230;
-                      Snap.load("Yin_yang.svg", function (a) {
-                          console.log(player)
-                          var piecex = startgrid[piecenum][0];
-                          var piecey = startgrid[piecenum][1];
-                          exist[piecex][piecey] = 1;
-                          piecenum = piecenum + 1;
-                          if (player == 1) {
-                              a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#ffd700"});
-                          } else {
-                              a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
-                          }
-                          var yypiece = svg.g(a.selectAll('*'));
-                          if (player == 0) {
-                              //for alternation of piece placing
-                              yypiece.attr({id: "yp1"});
-                          } else {
-                             yypiece.attr({id: "yp2"});
-                          }
-                          if (piecenum % 4 == 0 && piecenum != 0) {
-                              player = player + 1;
-                          }
-                          player = (player + 1) % 2;
-                         
-                          yypiece.attr({gx: piecex, gy: piecey});
-                          yypiece.transform(transformgrid[piecex][piecey]);
-                          svg.append(yypiece);
-                          //yypiece.node.onclick = piececallback(yypiece);
-                  
-                      });
-                      // var wt = parseFloat(g.attr("gx")); 
-                      // var ht = parseFloat(g.attr("gy"));
-                      // var xloc = grid[wt][ht][0];
-                      // var yloc = grid[wt][ht][1];
-                      // exist[wt][ht] = 1;
-                      // var gamepiece = svg.circle(xloc, yloc, 90);
-                      // gamepiece.attr({"position": [width,height]});
-                      // gamepiece.attr({"x": wt});
-                      // gamepiece.attr({"y": ht});
-                      // gamepiece.animate({r:70}, 500);
-                      // gamepiece.animate({cx:xloc, cy:yloc}, 500);
-                      // // gamepiece.node.animate({opacity: 0}, 1000);
-                      // gamepiece.attr({animation: "popup 10s 6.5s ease infinite"});
-                      // if (player == 0) {
-                      //     //for alternation of piece placing
-                      //     gamepiece.attr({id: "p1"});
-                      //     change = change + 1;
-                      // } else {
-                      //     gamepiece.attr({id: "p2"});
-                      //     change = change + 1;
-                      // }
-                      // // player = (player + 1 + (Math.floor(change / 4))) % 2;
-                      // if (player == 0) {
-                      //     turn = turn + 1;
-                      //     color = "blue";
-                      //     gamepiece.attr({fill: color});
-                      // } else {
-                      //     turn = turn + 1;
-                      //     color = "gold";
-                      //     gamepiece.attr({fill: color});
-                      // }
-                      // if (change % 4 == 0 && change != 0) {
-                      //     player = player + 1;
-                      // }
-                      // player = (player + 1) % 2;
-                      
-                      // var f_blur2 = svg.paper.filter(Snap.filter.blur(5, 1));
-                      // gamepiece.attr({opacity: .7, filter: f_Shadow});
-                      // var newgamepiece = svg.g(gamepiece);
-                      // newgamepiece.attr({filter: f_blur2});
-                      //gamepiece.node.onclick = piececallback(gamepiece);
-                  }
-              }
-              h = h + 1;
+          var positionpiece = svg.circle(locx, locy, 90);
+              //console.log(g);
+              //g.transform(temp0);
+              //g.attr({"x": x, "y": y});
+              //g.attr({"gx": width});
+              //g.attr({"gy": height});
+              //svg.append(f);
+              //background1.append(g);
 
-          });
+          if (startposition.indexOf(h) > -1) {
+              //if (1) {
+              startgrid.push([width, height]);
+              // console.log(svg.g(f.selectAll('*')).getAttribute("x"));
+              // var xloc = parseFloat(g.attr("x")) * 2/5 + 230;
+              // var yloc = parseFloat(g.attr("y")) * 2/5 + 230;
+              Snap.load("Yin_yang.svg", function (a) {
+                  console.log(player)
+                  var piecex = startgrid[piecenum][0];
+                  var piecey = startgrid[piecenum][1];
+                  exist[piecex][piecey] = 1;
+                  piecenum = piecenum + 1;
+                  if (player == 1) {
+                      a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#ffd700"});
+                  } else {
+                      a.selectAll(":not([style='fill:#ffffff'])").attr({style: "fill:#00f"});
+                  }
+                  var yypiece = svg.g(a.selectAll('*'));
+                  if (player == 0) {
+                      //for alternation of piece placing
+                      yypiece.attr({id: "yp1"});
+                  } else {
+                      yypiece.attr({id: "yp2"});
+                  }
+                  if (piecenum % 4 == 0 && piecenum != 0) {
+                      player = player + 1;
+                  }
+                  player = (player + 1) % 2;
+                  
+                  yypiece.attr({gx: piecex, gy: piecey});
+                  yypiece.transform(transformgrid[piecex][piecey]);
+                  svg.append(yypiece);
+                  //yypiece.node.onclick = piececallback(yypiece);
+                  
+              });
+              // var wt = parseFloat(g.attr("gx")); 
+              // var ht = parseFloat(g.attr("gy"));
+              // var xloc = grid[wt][ht][0];
+              // var yloc = grid[wt][ht][1];
+              // exist[wt][ht] = 1;
+              // var gamepiece = svg.circle(xloc, yloc, 90);
+              // gamepiece.attr({"position": [width,height]});
+              // gamepiece.attr({"x": wt});
+              // gamepiece.attr({"y": ht});
+              // gamepiece.animate({r:70}, 500);
+              // gamepiece.animate({cx:xloc, cy:yloc}, 500);
+              // // gamepiece.node.animate({opacity: 0}, 1000);
+              // gamepiece.attr({animation: "popup 10s 6.5s ease infinite"});
+              // if (player == 0) {
+              //     //for alternation of piece placing
+              //     gamepiece.attr({id: "p1"});
+              //     change = change + 1;
+              // } else {
+              //     gamepiece.attr({id: "p2"});
+              //     change = change + 1;
+              // }
+              // // player = (player + 1 + (Math.floor(change / 4))) % 2;
+              // if (player == 0) {
+              //     turn = turn + 1;
+              //     color = "blue";
+              //     gamepiece.attr({fill: color});
+              // } else {
+              //     turn = turn + 1;
+              //     color = "gold";
+              //     gamepiece.attr({fill: color});
+              // }
+              // if (change % 4 == 0 && change != 0) {
+              //     player = player + 1;
+              // }
+              // player = (player + 1) % 2;
+              
+              // var f_blur2 = svg.paper.filter(Snap.filter.blur(5, 1));
+              // gamepiece.attr({opacity: .7, filter: f_Shadow});
+              // var newgamepiece = svg.g(gamepiece);
+              // newgamepiece.attr({filter: f_blur2});
+              //gamepiece.node.onclick = piececallback(gamepiece);
+              //   }
+          }
+              h = h + 1;
+         // });
         }
     }
   var startbtn = svg.rect(0, 920, 100, 30).attr({fill: "white"});
